@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>聯絡我 — Suzy Portfolio</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js" defer></script>
+  <script src="https://code.iconify.design/iconify-icon/2.1.0/iconify-icon.min.js" defer></script>
+  <script src="js/main.js" defer></script>
+  <style>
+    body { padding-top: var(--nav-h); }
+
+    .contact-page {
+      min-height: calc(100vh - var(--nav-h));
+      display: flex; align-items: center;
+      padding: 80px 0;
+    }
+    .contact-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 80px; align-items: start;
+    }
+
+    /* Left */
+    .contact-intro h1 {
+      margin-bottom: 16px;
+      text-wrap: balance;
+      font-size: clamp(1.6rem, 2.4vw, 2.2rem);
+      line-height: 1.3;
+    }
+    .contact-intro p  { margin-bottom: 32px; font-size: 1.05rem; }
+    .contact-ps { margin-top: 24px; font-size: 0.85rem; color: var(--text-dim); }
+    .contact-methods  { display: flex; flex-direction: column; gap: 12px; }
+    .contact-method {
+      display: flex; align-items: center; gap: 14px;
+      padding: 18px 20px;
+      background: var(--bg-2); border: 1px solid var(--border);
+      border-radius: var(--radius); text-decoration: none; color: inherit;
+      transition: all 0.2s;
+    }
+    .contact-method:hover {
+      border-color: var(--accent-2);
+      background: rgba(124,92,252,0.06);
+    }
+    .contact-method__icon {
+      width: 40px; height: 40px; border-radius: 10px;
+      background: rgba(124,92,252,0.12); color: var(--accent-2);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .contact-method__text {}
+    .contact-method__label { font-size: 0.72rem; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.07em; font-weight: 600; }
+    .contact-method__value { font-size: 0.9rem; color: var(--text); font-weight: 500; }
+
+    /* Right: availability card */
+    .availability-card {
+      background: var(--bg-2); border: 1px solid var(--border);
+      border-radius: var(--radius-lg); padding: 36px;
+    }
+    .avail-status {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 6px 14px; border-radius: 100px;
+      background: rgba(34,197,94,0.1); border: 1px solid rgba(34,197,94,0.3);
+      font-size: 0.78rem; color: #4ade80; font-weight: 600; margin-bottom: 24px;
+    }
+    .avail-status::before {
+      content:''; width:6px; height:6px; border-radius:50%;
+      background:#4ade80; animation: pulse 2s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%,100%{opacity:1;transform:scale(1);}
+      50%{opacity:.4;transform:scale(.8);}
+    }
+    .availability-card h3 { margin-bottom: 12px; }
+    .availability-card p  { margin-bottom: 24px; font-size: 0.92rem; }
+    .avail-list { list-style: none; display: flex; flex-direction: column; gap: 10px; margin-bottom: 28px; }
+    .avail-list li {
+      display: flex; align-items: center; gap: 10px;
+      font-size: 0.88rem; color: var(--text-muted);
+    }
+    .avail-list li i { color: var(--accent-2); flex-shrink: 0; }
+
+    @media (max-width: 768px) {
+      .contact-grid { grid-template-columns: 1fr; gap: 48px; }
+    }
+  </style>
+  <link rel="icon" type="image/svg+xml" href="images/favicon.svg">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="container nav__inner">
+    <a class="nav__logo" href="index.html">Suzy ✦</a>
+    <ul class="nav__links">
+      <li><a href="about.html">關於我</a></li>
+      <li><a href="work.html">精選作品</a></li>
+      <li><a href="contact.html" class="active">聯絡我</a></li>
+    </ul>
+    <button class="nav__hamburger" aria-label="開啟選單" aria-expanded="false">
+      <i data-lucide="menu" style="width:24px;height:24px;"></i>
+    </button>
+  </div>
+  <nav class="nav__drawer">
+    <a href="about.html">關於我</a>
+    <a href="work.html">精選作品</a>
+    <a href="contact.html" class="active">聯絡我</a>
+  </nav>
+</nav>
+
+<section class="contact-page">
+  <div class="container">
+    <div class="contact-grid">
+
+      <!-- Left -->
+      <div class="contact-intro">
+        <span class="section-label">Contact</span>
+        <h1>在找一個懂設計<br>也懂產品邏輯的人？</h1>
+        <p>
+          我從平面設計、電商前端一路做到 UI/UX 與 PM，習慣在資源有限的新創裡把需求、畫面和邏輯一次扛起來。
+          不管你是在找即戰力，還是單純想聊聊產品和設計，都歡迎寫信給我——通常 24 小時內回信。
+        </p>
+
+        <div class="contact-methods">
+          <a href="mailto:st6918@gmail.com" class="contact-method">
+            <div class="contact-method__icon">
+              <i data-lucide="mail" style="width:18px;height:18px;"></i>
+            </div>
+            <div class="contact-method__text">
+              <div class="contact-method__label">Email</div>
+              <div class="contact-method__value">st6918@gmail.com</div>
+            </div>
+          </a>
+
+          <a href="https://www.linkedin.com/in/suzy-hsiao-portfolio/" target="_blank" rel="noopener" class="contact-method">
+            <div class="contact-method__icon">
+              <iconify-icon icon="tabler:brand-linkedin" width="18" height="18" style="display:inline-flex;"></iconify-icon>
+            </div>
+            <div class="contact-method__text">
+              <div class="contact-method__label">LinkedIn</div>
+              <div class="contact-method__value">linkedin.com/in/suzy-hsiao-portfolio</div>
+            </div>
+          </a>
+        </div>
+
+        <div class="contact-ps">P.S. 工作時理性冷靜，聊產品邏輯或使用者心理時，其實藏不住熱情。</div>
+      </div>
+
+      <!-- Right -->
+      <div>
+        <div class="availability-card">
+          <div class="avail-status">目前開放機會洽談</div>
+          <h3>我能幫你做什麼？</h3>
+          <p>如果你的團隊需要以下任一類型的夥伴，歡迎找我聊：</p>
+          <ul class="avail-list">
+            <li><i data-lucide="check-circle" style="width:16px;height:16px;"></i> Product Strategy ＆ Roadmap</li>
+            <li><i data-lucide="check-circle" style="width:16px;height:16px;"></i> UX 研究與使用者流程設計</li>
+            <li><i data-lucide="check-circle" style="width:16px;height:16px;"></i> UI Design ＆ Design System</li>
+            <li><i data-lucide="check-circle" style="width:16px;height:16px;"></i> PRD 撰寫與需求整理</li>
+            <li><i data-lucide="check-circle" style="width:16px;height:16px;"></i> PM + 設計一條龍的小型新創</li>
+          </ul>
+          <a href="mailto:st6918@gmail.com" class="btn btn--primary" style="width:100%;justify-content:center;">
+            <i data-lucide="send" style="width:16px;height:16px;"></i>
+            寄信給我
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <p>© 2026 Suzy · <a href="mailto:st6918@gmail.com">st6918@gmail.com</a></p>
+  </div>
+</footer>
+
+</body>
+</html>

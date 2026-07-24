@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Suzy — Product Manager & UI/UX Designer</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js" defer></script>
+  <script src="https://code.iconify.design/iconify-icon/2.1.0/iconify-icon.min.js" defer></script>
+  <script src="js/main.js" defer></script>
+  <style>
+    /* ================================================================
+       Home page styles
+       ================================================================ */
+
+    /* ── Hero ── */
+    #hero {
+      min-height: 100vh;
+      display: flex; align-items: center;
+      padding-top: var(--nav-h);
+      position: relative; overflow: hidden;
+    }
+    .hero-glow {
+      position: absolute; top: -180px; right: -180px;
+      width: 640px; height: 640px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(124,92,252,0.14) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-glow-2 {
+      position: absolute; bottom: -80px; left: -80px;
+      width: 380px; height: 380px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(167,139,250,0.07) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    /* Two-column layout */
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr 420px;
+      gap: 64px;
+      align-items: center;
+      position: relative;
+      width: 100%;
+    }
+
+    /* Left: text */
+    .hero-text {}
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 6px 14px; border-radius: 100px;
+      border: 1px solid rgba(124,92,252,0.4);
+      background: rgba(124,92,252,0.08);
+      font-size: 0.78rem; color: var(--accent-2);
+      letter-spacing: 0.07em; text-transform: uppercase; font-weight: 600;
+      margin-bottom: 28px;
+    }
+    .hero-badge::before {
+      content: ''; width: 6px; height: 6px; border-radius: 50%;
+      background: var(--accent);
+      animation: pulse 2s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%,100%{ opacity:1; transform:scale(1); }
+      50%    { opacity:.5; transform:scale(.8); }
+    }
+    .hero-title  { margin-bottom: 20px; }
+    .hero-desc   { font-size: 1.08rem; max-width: 520px; margin-bottom: 36px; }
+    .hero-ctas   { display: flex; gap: 12px; flex-wrap: wrap; }
+
+    /* Right: photo */
+    .hero-photo-wrap {
+      position: relative; display: flex; justify-content: center;
+    }
+    .hero-photo-frame {
+      position: relative;
+      width: 360px; height: 440px;
+      border-radius: 24px;
+      overflow: hidden;
+      border: 1px solid rgba(124,92,252,0.25);
+      box-shadow:
+        0 0 0 1px rgba(124,92,252,0.12),
+        0 32px 80px rgba(0,0,0,0.5),
+        0 0 60px rgba(124,92,252,0.12);
+    }
+    .hero-photo-frame img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
+    }
+    /* subtle gradient at bottom of photo to blend into bg */
+    .hero-photo-frame::after {
+      content: '';
+      position: absolute; bottom: 0; left: 0; right: 0; height: 80px;
+      background: linear-gradient(to top, rgba(10,10,15,0.5), transparent);
+      pointer-events: none;
+    }
+    /* decorative ring */
+    .hero-photo-ring {
+      position: absolute;
+      top: -12px; right: -12px;
+      width: 100px; height: 100px;
+      border-radius: 50%;
+      border: 1.5px dashed rgba(124,92,252,0.25);
+      animation: spin 18s linear infinite;
+      pointer-events: none;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* Photo hover: subtle tilt */
+    .hero-photo-frame {
+      transition: transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1),
+                  box-shadow 0.45s ease;
+    }
+    .hero-photo-wrap:hover .hero-photo-frame {
+      transform: rotate(2.5deg) scale(1.015);
+      box-shadow:
+        0 0 0 1px rgba(124,92,252,0.22),
+        0 40px 96px rgba(0,0,0,0.55),
+        0 0 80px rgba(124,92,252,0.2);
+    }
+
+    /* ── About ── */
+    #about { background: var(--bg-2); }
+    .about-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 64px; align-items: start;
+    }
+    .about-text h2 { margin-bottom: 20px; }
+    .about-text p  { margin-bottom: 16px; }
+    .timeline { display: flex; flex-direction: column; }
+    .timeline-item {
+      display: grid; grid-template-columns: 110px 1fr; gap: 20px;
+      padding: 22px 0; border-bottom: 1px solid var(--border);
+    }
+    .timeline-item:last-child { border-bottom: none; }
+    .timeline-year {
+      font-size: 0.78rem; color: var(--accent-2); font-weight: 700;
+      letter-spacing: 0.04em; padding-top: 3px; line-height: 1.5;
+    }
+    .timeline-content h4 { margin-bottom: 4px; }
+    .timeline-content p  { font-size: 0.84rem; line-height: 1.6; }
+
+    /* ── Work ── */
+    .work-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(460px, 1fr));
+      gap: 24px;
+    }
+    .work-card { text-decoration: none; color: inherit; overflow: hidden; }
+    .work-card__thumb {
+      aspect-ratio: 16/9; background: var(--bg-3);
+      display: flex; align-items: center; justify-content: center;
+      position: relative; overflow: hidden;
+    }
+    .work-card__thumb img { width:100%; height:100%; object-fit:cover; }
+    .work-card__thumb-placeholder {
+      display: flex; flex-direction: column; align-items: center; gap: 10px;
+      font-size: 0.82rem; color: var(--text-dim);
+    }
+    .work-card__label {
+      position: absolute; top: 14px; left: 14px; z-index: 2;
+      padding: 6px 14px; border-radius: 100px; font-size: 0.72rem; font-weight: 700;
+      background: rgba(10,10,15,0.6);
+      backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+      color: #fff;
+      border: 1px solid rgba(124,92,252,0.55); letter-spacing: 0.05em;
+      box-shadow: 0 2px 14px rgba(0,0,0,0.35);
+    }
+    .work-card__body { padding: 24px; }
+    .work-card__body h3 { margin-bottom: 8px; }
+    .work-card__body p  { font-size: 0.87rem; margin-bottom: 16px; }
+    .work-card__tags    { display: flex; flex-wrap: wrap; gap: 7px; }
+
+    /* ── Skills ── */
+    #skills { background: var(--bg-2); }
+    .skills-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 20px;
+    }
+    .skill-card {
+      border-radius: var(--radius); padding: 28px;
+      background: var(--bg-3); border: 1px solid var(--border);
+      transition: border-color 0.2s;
+    }
+    .skill-card:hover { border-color: var(--border-hover); }
+    .skill-icon {
+      width: 42px; height: 42px; border-radius: 10px;
+      background: rgba(124,92,252,0.12);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.2rem; margin-bottom: 16px;
+      color: var(--accent-2);
+    }
+    .skill-card h3  { margin-bottom: 12px; font-size: 0.95rem; }
+    .skill-list     { list-style: none; }
+    .skill-list li  {
+      font-size: 0.83rem; color: var(--text-muted); padding: 5px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+      display: flex; align-items: center; gap: 8px;
+    }
+    .skill-list li:last-child { border-bottom: none; }
+    .skill-list li::before {
+      content: ''; width: 4px; height: 4px; border-radius: 50%;
+      background: var(--accent); flex-shrink: 0;
+    }
+
+    /* ── Contact CTA ── */
+    #contact { text-align: center; }
+    .contact-inner { max-width: 720px; margin: 0 auto; }
+    .contact-inner h2 {
+      margin-bottom: 14px;
+      max-width: 100%;
+      text-wrap: balance;
+    }
+    /* Only force single line once there's enough width to fit it cleanly */
+    @media (min-width: 640px) {
+      .contact-inner h2 { white-space: nowrap; }
+    }
+    .contact-inner p  {
+      max-width: 520px; margin-left: auto; margin-right: auto;
+      margin-bottom: 28px;
+    }
+
+    .contact-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      max-width: 100%; box-sizing: border-box;
+      padding: 6px 14px; border-radius: 100px;
+      border: 1px solid rgba(124,92,252,0.3);
+      background: rgba(124,92,252,0.06);
+      font-size: 0.78rem; color: var(--text-muted);
+      white-space: normal; text-align: center; line-height: 1.4;
+      margin-bottom: 22px;
+    }
+    .contact-badge .dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--accent-2); flex-shrink: 0;
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    .contact-tags {
+      display: flex; justify-content: center; flex-wrap: wrap;
+      gap: 8px; margin: 0 0 32px;
+    }
+
+    .contact-links { display: flex; justify-content: center; gap: 14px; flex-wrap: wrap; }
+    .contact-link {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 12px 22px; border-radius: 10px;
+      border: 1px solid var(--border); color: var(--text-muted);
+      font-size: 0.88rem; text-decoration: none; transition: all 0.2s;
+    }
+    .contact-link:hover {
+      border-color: var(--accent-2); color: var(--text);
+      background: rgba(124,92,252,0.06);
+    }
+
+    .contact-ps {
+      margin-top: 32px; font-size: 0.82rem; color: var(--text-dim);
+    }
+
+    /* ================================================================
+       Responsive
+       ================================================================ */
+    @media (max-width: 900px) {
+      .hero-grid {
+        grid-template-columns: 1fr;
+        gap: 48px;
+        text-align: center;
+      }
+      .hero-desc  { margin-left: auto; margin-right: auto; }
+      .hero-ctas  { justify-content: center; }
+      .hero-photo-wrap { justify-content: center; order: -1; }
+      .hero-photo-frame { width: 220px; height: 268px; }
+    }
+
+    @media (max-width: 768px) {
+      .about-grid { grid-template-columns: 1fr; gap: 40px; }
+      .work-grid  { grid-template-columns: 1fr; }
+      #hero       { padding-top: calc(var(--nav-h) + 24px); }
+      .hero-photo-frame { width: 180px; height: 220px; }
+    }
+  </style>
+  <link rel="icon" type="image/svg+xml" href="images/favicon.svg">
+</head>
+<body>
+
+<!-- ================================================================
+     Navigation
+     ================================================================ -->
+<nav class="nav" role="navigation" aria-label="主導覽">
+  <div class="container nav__inner">
+    <a class="nav__logo" href="index.html">Suzy ✦</a>
+
+    <!-- Desktop links -->
+    <ul class="nav__links">
+      <li><a href="about.html">關於我</a></li>
+      <li><a href="work.html">精選作品</a></li>
+      <li><a href="contact.html">聯絡我</a></li>
+    </ul>
+
+    <!-- Hamburger (mobile) -->
+    <button class="nav__hamburger" aria-label="開啟選單" aria-expanded="false">
+      <i data-lucide="menu" style="width:24px;height:24px;"></i>
+    </button>
+  </div>
+
+  <!-- Mobile drawer -->
+  <nav class="nav__drawer" aria-label="行動裝置選單">
+    <a href="about.html">關於我</a>
+    <a href="work.html">精選作品</a>
+    <a href="contact.html">聯絡我</a>
+  </nav>
+</nav>
+
+
+<!-- ================================================================
+     Hero
+     ================================================================ -->
+<section id="hero">
+  <div class="hero-glow"></div>
+  <div class="hero-glow-2"></div>
+  <div class="container">
+    <div class="hero-grid">
+
+      <!-- Left: text -->
+      <div class="hero-text">
+        <div class="hero-badge">Product Manager · UI/UX Designer</div>
+        <h1 class="hero-title">
+          <span class="gradient-text">設計出身的產品人</span><br>
+          讓複雜需求變得清晰
+        </h1>
+        <p class="hero-desc">
+          從平面設計一路走到產品管理，我用設計的眼睛看產品，用產品的思維做設計。
+          擅長在新創環境裡一人扛起需求、流程、介面到上線驗收。
+        </p>
+        <div class="hero-ctas">
+          <a href="work.html" class="btn btn--primary">
+            <i data-lucide="layout-grid" style="width:16px;height:16px;"></i>
+            查看作品
+          </a>
+          <a href="contact.html" class="btn btn--outline">
+            聯絡我
+            <i data-lucide="arrow-right" style="width:15px;height:15px;"></i>
+          </a>
+        </div>
+      </div>
+
+      <!-- Right: photo -->
+      <div class="hero-photo-wrap">
+        <div class="hero-photo-ring"></div>
+        <div class="hero-photo-frame">
+          <img src="images/about/Suzy.jpg" alt="Suzy — Product Manager & UI/UX Designer" />
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ================================================================
+     About (preview)
+     ================================================================ -->
+<section id="about">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-text">
+        <span class="section-label">About</span>
+        <h2 class="section-title">從設計到產品，<br>每一步都是刻意的。</h2>
+        <p>
+          我叫 Suzy，是一位設計背景出身的產品經理，也是可以自己動手做 UI 的 PM。
+          職涯從平面設計起步，做過品牌視覺、電商網站、App 介面設計，
+          然後在愛上大數據正式轉職為 PM——不是因為設計不夠好，而是我想參與更上游的決策。
+        </p>
+        <p>
+          現在在元宇宙事業有限公司擔任 PM & UI/UX Designer，
+          在資源有限的新創裡，從使用者訪談、產品規劃、Wireframe、UI 設計
+          一路做到與 RD 對接、上線驗收，完整跑過產品的整個生命週期。
+        </p>
+        <a href="about.html" class="btn btn--outline" style="margin-top:8px;">
+          了解更多
+          <i data-lucide="arrow-right" style="width:15px;height:15px;"></i>
+        </a>
+      </div>
+
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-year">2025/11 —<br>現在</div>
+          <div class="timeline-content">
+            <h4>Product Manager / Product Designer</h4>
+            <p>元宇宙事業有限公司｜主導產品 Roadmap、UX 流程與 UI 設計，一人承接 PM + 設計全職能</p>
+            <span class="tag tag--accent" style="margin-top:8px;">PM + Design</span>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-year">2025/6 —<br>2025/10</div>
+          <div class="timeline-content">
+            <h4>Product Manager</h4>
+            <p>愛上大數據股份有限公司｜負責寵物保母平台策略規劃、PRD 撰寫與帶領 RD 協作開發</p>
+            <span class="tag tag--accent" style="margin-top:8px;">PM</span>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-year">2025/2 —<br>2025/10</div>
+          <div class="timeline-content">
+            <h4>UI/UX Designer</h4>
+            <p>愛上大數據股份有限公司｜飼主端與保母端流程設計、Wireframe、設計系統建置</p>
+            <span class="tag tag--accent" style="margin-top:8px;">UI/UX</span>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-year">2023/10 —<br>2024/6</div>
+          <div class="timeline-content">
+            <h4>UI/UX Designer</h4>
+            <p>松果購物股份有限公司｜電商網站與 App 頁面設計、競品分析、Scrum 開發協作</p>
+            <span class="tag tag--accent" style="margin-top:8px;">UI/UX</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ================================================================
+     Work (preview — 2 featured)
+     ================================================================ -->
+<section id="work">
+  <div class="container">
+    <span class="section-label">Work</span>
+    <h2 class="section-title">精選專案</h2>
+    <p class="section-desc">從需求研究到上線交付，這裡是我參與過的幾個代表性案例。</p>
+    <div class="divider"></div>
+
+    <div class="work-grid">
+      <a href="work/maokiddo2.0.html" class="card work-card">
+        <div class="work-card__thumb">
+          <span class="work-card__label">PM + UI/UX</span>
+          <img src="images/projects/mao-1.png" alt="maokiddo 2.0 封面" />
+        </div>
+        <div class="work-card__body">
+          <h3>maokiddo 2.0</h3>
+          <p>技術債困境下的重建型專案。以 PM + UI/UX 雙角色，3 個月內從 0 到 1 打造寵物照護平台 MVP，將地圖搜尋改為條件式配對預約，上線一個月會員數突破千人。</p>
+          <div class="work-card__tags">
+            <span class="tag">產品重構</span>
+            <span class="tag">需求訪談</span>
+            <span class="tag">UX Flow</span>
+            <span class="tag">Figma</span>
+          </div>
+        </div>
+      </a>
+
+      <a href="work/pcone-oversea.html" class="card work-card">
+        <div class="work-card__thumb">
+          <span class="work-card__label">UI/UX Design</span>
+          <img src="images/projects/oversea-1.jpg" alt="松果購物國際直購封面" />
+        </div>
+        <div class="work-card__body">
+          <h3>松果購物 · 國際直購服務</h3>
+          <p>在既有電商平台上從零建立海外商品服務，重新規劃購物流程、建立獨立視覺語言，並設計 EZway 報關溝通策略，降低跨境購物的認知門檻與棄單率。</p>
+          <div class="work-card__tags">
+            <span class="tag">新服務導入</span>
+            <span class="tag">電商平台</span>
+            <span class="tag">Figma</span>
+          </div>
+        </div>
+      </a>
+    </div>
+
+    <div style="text-align:center;margin-top:48px;">
+      <a href="work.html" class="btn btn--outline">
+        查看所有專案
+        <i data-lucide="arrow-right" style="width:15px;height:15px;"></i>
+      </a>
+    </div>
+  </div>
+</section>
+
+
+<!-- ================================================================
+     Skills
+     ================================================================ -->
+<section id="skills">
+  <div class="container">
+    <span class="section-label">Skills</span>
+    <h2 class="section-title">工具與能力</h2>
+    <p class="section-desc">在設計與產品之間自由切換，用對的工具解決對的問題。</p>
+    <div class="divider"></div>
+
+    <div class="skills-grid">
+      <div class="skill-card">
+        <div class="skill-icon"><i data-lucide="target" style="width:22px;height:22px;"></i></div>
+        <h3>Product Management</h3>
+        <ul class="skill-list">
+          <li>產品策略與 Roadmap 規劃</li>
+          <li>PRD 撰寫與需求整理</li>
+          <li>使用者訪談與需求研究</li>
+          <li>Scrum / Agile 開發流程</li>
+          <li>上線驗收與 A/B 測試</li>
+        </ul>
+      </div>
+      <div class="skill-card">
+        <div class="skill-icon"><i data-lucide="pen-tool" style="width:22px;height:22px;"></i></div>
+        <h3>UX / Product Design</h3>
+        <ul class="skill-list">
+          <li>User Flow & Wireframe</li>
+          <li>UI 設計與 Prototype</li>
+          <li>Usability Testing</li>
+          <li>Design System 建立</li>
+          <li>RD 溝通與 Handoff</li>
+        </ul>
+      </div>
+      <div class="skill-card">
+        <div class="skill-icon"><i data-lucide="wrench" style="width:22px;height:22px;"></i></div>
+        <h3>Tools</h3>
+        <ul class="skill-list">
+          <li>Figma（主要設計工具）</li>
+          <li>Jira（需求管理）</li>
+          <li>GitHub（基本操作）</li>
+          <li>HTML / CSS 基礎</li>
+          <li>Claude / Perplexity（AI 輔助）</li>
+        </ul>
+      </div>
+      <div class="skill-card">
+        <div class="skill-icon"><i data-lucide="lightbulb" style="width:22px;height:22px;"></i></div>
+        <h3>Soft Skills</h3>
+        <ul class="skill-list">
+          <li>跨職能溝通與對齊</li>
+          <li>視覺化表達複雜需求</li>
+          <li>新創環境快速決策</li>
+          <li>商業思維與使用者洞察平衡</li>
+          <li>細膩的觀察與深度提問</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ================================================================
+     Contact CTA
+     ================================================================ -->
+<section id="contact">
+  <div class="container">
+    <div class="contact-inner">
+      <span class="section-label">Contact</span>
+
+      <span class="contact-badge"><span class="dot"></span>現在：在新創裡一人身兼 PM + UI/UX</span>
+
+      <h2>在找一個懂設計、也懂產品邏輯的人？</h2>
+      <p>
+        我從平面設計、電商前端一路做到 UI/UX 與 PM，習慣在資源有限、角色邊界模糊的新創裡把需求、畫面和邏輯一次扛起來。
+        如果你在找即戰力，或只是想聊聊產品和設計，都歡迎寫信給我。
+      </p>
+
+      <div class="contact-tags">
+        <span class="tag tag--accent">Product Strategy</span>
+        <span class="tag tag--accent">UX 研究</span>
+        <span class="tag tag--accent">Design System</span>
+        <span class="tag tag--accent">新創 0→1</span>
+        <span class="tag tag--accent">AI 輔助工作流</span>
+      </div>
+
+      <div class="contact-links">
+        <a href="mailto:st6918@gmail.com" class="contact-link">
+          <i data-lucide="mail" style="width:16px;height:16px;"></i>
+          Email
+        </a>
+        <a href="https://www.linkedin.com/in/suzy-hsiao-portfolio/" target="_blank" rel="noopener" class="contact-link">
+          <iconify-icon icon="tabler:brand-linkedin" width="16" height="16" style="display:inline-flex;"></iconify-icon>
+          LinkedIn
+        </a>
+      </div>
+
+      <div class="contact-ps">P.S. 工作時理性冷靜，聊產品邏輯或使用者心理時，其實藏不住熱情。</div>
+    </div>
+  </div>
+</section>
+
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="container">
+    <p>© 2026 Suzy · <a href="mailto:st6918@gmail.com">st6918@gmail.com</a></p>
+  </div>
+</footer>
+
+</body>
+</html>

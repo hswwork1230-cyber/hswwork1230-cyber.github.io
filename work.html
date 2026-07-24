@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>精選作品 — Suzy Portfolio</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js" defer></script>
+  <script src="js/main.js" defer></script>
+  <style>
+    body { padding-top: var(--nav-h); }
+
+    .page-hero {
+      padding: 72px 0 80px;
+      border-bottom: 1px solid var(--border);
+    }
+    .page-hero h1 { margin-bottom: 16px; }
+    .page-hero p  { max-width: 560px; font-size: 1.05rem; }
+
+    /* Filter tabs */
+    .filter-bar {
+      display: flex; gap: 8px; flex-wrap: wrap;
+      padding: 32px 0 0;
+    }
+    .filter-btn {
+      padding: 7px 18px; border-radius: 100px; font-size: 0.82rem; font-weight: 500;
+      border: 1px solid var(--border); color: var(--text-muted);
+      background: transparent; cursor: pointer; transition: all 0.2s;
+    }
+    .filter-btn:hover,
+    .filter-btn.active {
+      border-color: var(--accent-2); color: var(--accent-2);
+      background: rgba(124,92,252,0.08);
+    }
+
+    /* Work grid */
+    .work-section { padding: 56px 0 100px; }
+    .work-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(460px, 1fr));
+      gap: 28px;
+    }
+    .work-card { text-decoration: none; color: inherit; overflow: hidden; }
+    .work-card__thumb {
+      aspect-ratio: 16/9; background: var(--bg-3);
+      display: flex; align-items: center; justify-content: center;
+      position: relative; overflow: hidden;
+    }
+    .work-card__thumb img { width:100%; height:100%; object-fit:cover; }
+    .work-card__thumb-placeholder {
+      display: flex; flex-direction: column; align-items: center; gap: 10px;
+      font-size: 0.82rem; color: var(--text-dim);
+    }
+    .work-card__label {
+      position: absolute; top: 14px; left: 14px; z-index: 2;
+      padding: 6px 14px; border-radius: 100px; font-size: 0.72rem; font-weight: 700;
+      background: rgba(10,10,15,0.6);
+      backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+      color: #fff;
+      border: 1px solid rgba(124,92,252,0.55); letter-spacing: 0.05em;
+      box-shadow: 0 2px 14px rgba(0,0,0,0.35);
+    }
+    .work-card__body { padding: 24px; }
+    .work-card__body h3 { margin-bottom: 8px; }
+    .work-card__body p  { font-size: 0.87rem; margin-bottom: 16px; }
+    .work-card__tags    { display: flex; flex-wrap: wrap; gap: 7px; }
+    .work-card__arrow {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 0.82rem; color: var(--accent-2); margin-top: 16px;
+    }
+
+    @media (max-width: 768px) {
+      .work-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+  <link rel="icon" type="image/svg+xml" href="images/favicon.svg">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="container nav__inner">
+    <a class="nav__logo" href="index.html">Suzy ✦</a>
+    <ul class="nav__links">
+      <li><a href="about.html">關於我</a></li>
+      <li><a href="work.html" class="active">精選作品</a></li>
+      <li><a href="contact.html">聯絡我</a></li>
+    </ul>
+    <button class="nav__hamburger" aria-label="開啟選單" aria-expanded="false">
+      <i data-lucide="menu" style="width:24px;height:24px;"></i>
+    </button>
+  </div>
+  <nav class="nav__drawer">
+    <a href="about.html">關於我</a>
+    <a href="work.html" class="active">精選作品</a>
+    <a href="contact.html">聯絡我</a>
+  </nav>
+</nav>
+
+<!-- Page Hero -->
+<div class="page-hero">
+  <div class="container">
+    <span class="section-label">Work</span>
+    <h1>精選作品</h1>
+    <p>從需求研究到上線交付，這裡收錄了我參與過的代表性案例，橫跨 PM 策略規劃與 UI/UX 設計。</p>
+
+    <div class="filter-bar">
+      <button class="filter-btn active" data-filter="all">全部</button>
+      <button class="filter-btn" data-filter="pm">PM + Strategy</button>
+      <button class="filter-btn" data-filter="uiux">UI/UX Design</button>
+      <button class="filter-btn" data-filter="visual">Visual Design</button>
+    </div>
+  </div>
+</div>
+
+<!-- Work Grid -->
+<div class="work-section">
+  <div class="container">
+    <div class="work-grid">
+
+      <!-- 1. maokiddo 2.0 -->
+      <a href="work/maokiddo2.0.html" class="card work-card" data-cat="pm uiux">
+        <div class="work-card__thumb">
+          <span class="work-card__label">PM + UI/UX</span>
+          <img src="images/projects/mao-1.png" alt="maokiddo 2.0 封面">
+        </div>
+        <div class="work-card__body">
+          <h3>maokiddo 2.0</h3>
+          <p>技術債困境下的重建型專案。以 PM + UI/UX 雙角色，3 個月內從 0 到 1 打造寵物照護平台 MVP，將地圖搜尋改為條件式配對預約，上線一個月會員數突破千人。</p>
+          <div class="work-card__tags">
+            <span class="tag">產品重構</span>
+            <span class="tag">需求訪談</span>
+            <span class="tag">UX Flow</span>
+            <span class="tag">Figma</span>
+          </div>
+          <div class="work-card__arrow">
+            查看案例 <i data-lucide="arrow-right" style="width:14px;height:14px;"></i>
+          </div>
+        </div>
+      </a>
+
+      <!-- 2. maokiddo 折價券系統 -->
+      <a href="work/maokiddo-coupon.html" class="card work-card" data-cat="pm uiux">
+        <div class="work-card__thumb">
+          <span class="work-card__label">PM + UI/UX</span>
+          <img src="images/projects/mao折價券-1.jpg" alt="maokiddo 折價券系統封面">
+        </div>
+        <div class="work-card__body">
+          <h3>maokiddo 折價券系統</h3>
+          <p>為只有點數機制的電商平台，從 0 到 1 補上折價券這個最基本的行銷槓桿。從後台規則引擎到前台結帳整合一手規劃設計，上線後持續以數據檢視成效與落差。</p>
+          <div class="work-card__tags">
+            <span class="tag">0→1 系統規劃</span>
+            <span class="tag">PRD</span>
+            <span class="tag">前後台設計</span>
+            <span class="tag">數據追蹤</span>
+          </div>
+          <div class="work-card__arrow">
+            查看案例 <i data-lucide="arrow-right" style="width:14px;height:14px;"></i>
+          </div>
+        </div>
+      </a>
+
+      <!-- 3. maokiddo 品牌識別與角色設計 -->
+      <a href="work/maokiddo-ip.html" class="card work-card" data-cat="visual">
+        <div class="work-card__thumb">
+          <span class="work-card__label">Brand Identity & Character Design</span>
+          <img src="images/projects/maokiddo%20ip-首圖.jpg" alt="maokiddo 品牌識別與角色設計封面">
+        </div>
+        <div class="work-card__body">
+          <h3>maokiddo 品牌識別與角色設計</h3>
+          <p>在產品工作之外，一手包辦品牌識別系統——從品牌故事、名片與制服設計，到吉祥物「旺奇」與「奇咪」的角色設定與 AI 生圖 pipeline，產出印刷成品用於名片、制服與線下展場物料。</p>
+          <div class="work-card__tags">
+            <span class="tag">品牌識別</span>
+            <span class="tag">角色設計</span>
+            <span class="tag">AI 生圖 Pipeline</span>
+          </div>
+          <div class="work-card__arrow">
+            查看案例 <i data-lucide="arrow-right" style="width:14px;height:14px;"></i>
+          </div>
+        </div>
+      </a>
+
+      <!-- 4. 松果購物 · 國際直購服務 -->
+      <a href="work/pcone-oversea.html" class="card work-card" data-cat="uiux">
+        <div class="work-card__thumb">
+          <span class="work-card__label">UI/UX Design</span>
+          <img src="images/projects/oversea-1.jpg" alt="松果購物國際直購封面">
+        </div>
+        <div class="work-card__body">
+          <h3>松果購物 · 國際直購服務</h3>
+          <p>在既有電商平台上從零建立海外商品服務，重新規劃購物流程、建立獨立視覺語言，並設計 EZway 報關溝通策略，降低跨境購物的認知門檻與棄單率。</p>
+          <div class="work-card__tags">
+            <span class="tag">新服務導入</span>
+            <span class="tag">電商平台</span>
+            <span class="tag">Figma</span>
+          </div>
+          <div class="work-card__arrow">
+            查看案例 <i data-lucide="arrow-right" style="width:14px;height:14px;"></i>
+          </div>
+        </div>
+      </a>
+
+      <!-- 5. 毛孩星球 · 守護星測驗 -->
+      <a href="work/pets-planet-quiz.html" class="card work-card" data-cat="pm uiux">
+        <div class="work-card__thumb">
+          <span class="work-card__label">PM + UI/UX</span>
+          <img src="images/projects/quiz.png" alt="毛孩星球守護星測驗封面">
+        </div>
+        <div class="work-card__body">
+          <h3>毛孩星球 · 守護星測驗</h3>
+          <p>將「星象學 × 寵物健康」的品牌定位轉化為互動分眾行銷漏斗。獨立完成策略企劃、IP 設計與前端開發，約一周上線，並成為實體展場的互動推廣素材。</p>
+          <div class="work-card__tags">
+            <span class="tag">品牌策略</span>
+            <span class="tag">IP 設計</span>
+            <span class="tag">互動測驗</span>
+          </div>
+          <div class="work-card__arrow">
+            查看案例 <i data-lucide="arrow-right" style="width:14px;height:14px;"></i>
+          </div>
+        </div>
+      </a>
+
+      <!-- 6. WorkEnergy -->
+      <a href="work/workenergy.html" class="card work-card" data-cat="pm">
+        <div class="work-card__thumb">
+          <span class="work-card__label">PM × Vibe Coding</span>
+          <img src="images/projects/workenergy-封面%20.jpg" alt="WorkEnergy 封面">
+        </div>
+        <div class="work-card__body">
+          <h3>WorkEnergy</h3>
+          <p>以 PM 身份定義、獨立開發並上線的全端 Side Project。讓知識工作者每天花 2 分鐘記錄，把模糊的疲勞感轉成看得懂的耗能模式——約 2 天從 0 到上線。</p>
+          <div class="work-card__tags">
+            <span class="tag">Side Project</span>
+            <span class="tag">產品定義</span>
+            <span class="tag">Vibe Coding</span>
+            <span class="tag">Next.js</span>
+          </div>
+          <div class="work-card__arrow">
+            查看案例 <i data-lucide="arrow-right" style="width:14px;height:14px;"></i>
+          </div>
+        </div>
+      </a>
+
+      <!-- 7. 瘋台祭 Taiwanese Festival -->
+      <a href="work/taiwanese-festival.html" class="card work-card" data-cat="visual">
+        <div class="work-card__thumb">
+          <span class="work-card__label">Visual Design</span>
+          <img src="images/projects/ta1.jpg" alt="瘋台祭 Taiwanese Festival 封面">
+        </div>
+        <div class="work-card__body">
+          <h3>瘋台祭 Taiwanese Festival</h3>
+          <p>將六個台灣傳統祭典化為多層壓克力燈箱與禮盒設計，用插畫與工藝讓在地文化走入日常，讓外國人看見更立體的台灣。獲兩項 Red Dot Award 肯定。</p>
+          <div class="work-card__tags">
+            <span class="tag">插畫</span>
+            <span class="tag">包裝設計</span>
+            <span class="tag">Red Dot Award</span>
+          </div>
+          <div class="work-card__arrow">
+            查看案例 <i data-lucide="arrow-right" style="width:14px;height:14px;"></i>
+          </div>
+        </div>
+      </a>
+
+    </div>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="container">
+    <p>© 2026 Suzy · <a href="mailto:st6918@gmail.com">st6918@gmail.com</a></p>
+  </div>
+</footer>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    var btns  = document.querySelectorAll('.filter-btn');
+    var cards = document.querySelectorAll('.work-card[data-cat]');
+    btns.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        btns.forEach(function (b) { b.classList.remove('active'); });
+        btn.classList.add('active');
+        var f = btn.dataset.filter;
+        cards.forEach(function (card) {
+          var cats = (card.dataset.cat || '').split(' ');
+          card.style.display = (f === 'all' || cats.indexOf(f) !== -1) ? '' : 'none';
+        });
+      });
+    });
+  });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>【專案名稱】— Suzy Portfolio</title>
+  <link rel="stylesheet" href="../css/style.css" />
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js" defer></script>
+  <script src="../js/main.js" defer></script>
+  <style>
+    /* ── Project Detail Page ── */
+    body { padding-top: var(--nav-h); }
+
+    /* Hero */
+    .project-hero {
+      padding: 64px 0 80px;
+      border-bottom: 1px solid var(--border);
+    }
+    .project-meta {
+      display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 20px;
+    }
+    .project-title { margin-bottom: 16px; }
+    .project-summary {
+      font-size: 1.12rem; margin-bottom: 32px;
+      color: var(--text-muted); line-height: 1.8;
+    }
+    .project-info-row {
+      display: flex; flex-wrap: wrap; gap: 32px; margin-top: 32px;
+      padding-top: 32px; border-top: 1px solid var(--border);
+    }
+    .project-info-item label {
+      display: block; font-size: 0.72rem; color: var(--text-dim);
+      text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 4px;
+    }
+    .project-info-item span { font-size: 0.9rem; color: var(--text); font-weight: 500; }
+
+    /* Cover image */
+    .project-cover {
+      width: 100%; aspect-ratio: 16/7;
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+      overflow: hidden; border-radius: var(--radius-lg); margin: 48px 0;
+      display: flex; align-items: center; justify-content: center;
+      position: relative;
+    }
+    .project-cover img { width: 100%; height: 100%; object-fit: cover; }
+    .project-cover-placeholder {
+      display: flex; flex-direction: column; align-items: center; gap: 12px;
+      color: var(--text-dim); font-size: 0.85rem; text-align: center;
+    }
+    .cover-icon {
+      width: 56px; height: 56px; border-radius: 16px;
+      background: rgba(124,92,252,0.2); border: 1px solid rgba(124,92,252,0.3);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.8rem;
+    }
+
+    /* Content */
+    .project-content { max-width: 100%; }
+    .project-section { margin-bottom: 72px; }
+    .project-section h2 { font-size: 1.45rem; margin-bottom: 20px; color: var(--text); }
+    .project-section p  { margin-bottom: 16px; line-height: 1.85; }
+    .project-section ul { list-style: none; margin-bottom: 16px; }
+    .project-section ul li {
+      padding: 10px 0; color: var(--text-muted); font-size: 0.97rem;
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: flex-start; gap: 10px; line-height: 1.7;
+    }
+    .project-section ul li:last-child { border-bottom: none; }
+    .project-section ul li::before { content:'→'; color: var(--accent-2); flex-shrink:0; margin-top: 1px; }
+    /* 在 li 裡用 strong 當標籤時加 white-space:nowrap 防止標題中途換行 */
+    .project-section ul li strong { white-space: nowrap; color: var(--text); }
+
+    /* Section divider */
+    .section-divider {
+      border: none; border-top: 1px solid var(--border); margin: 0 0 72px;
+    }
+
+    /* Callout */
+    .callout {
+      background: var(--bg-3); border-left: 3px solid var(--accent);
+      border-radius: 0 var(--radius) var(--radius) 0;
+      padding: 20px 24px; margin: 24px 0;
+    }
+    .callout p { margin-bottom: 0; font-size: 0.97rem; font-style: italic; }
+    .callout strong { color: var(--text); }
+
+    /* Flow steps */
+    .flow-steps { margin: 28px 0; display: flex; flex-direction: column; gap: 12px; }
+    .flow-step {
+      display: flex; align-items: flex-start; gap: 16px;
+      background: var(--bg-3); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 16px 20px;
+    }
+    .flow-step-num {
+      flex-shrink: 0; width: 28px; height: 28px; border-radius: 50%;
+      background: rgba(124,92,252,0.2); border: 1px solid rgba(124,92,252,0.4);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.78rem; font-weight: 700; color: var(--accent-2);
+    }
+    .flow-step-text { color: var(--text-muted); font-size: 0.95rem; line-height: 1.6; }
+    .flow-step-text strong { color: var(--text); }
+
+    /* Feature grid */
+    .feature-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px; margin: 28px 0;
+    }
+    .feature-card {
+      background: var(--bg-3); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 20px;
+    }
+    .feature-card h4 {
+      font-size: 0.88rem; color: var(--accent-2); margin-bottom: 10px;
+    }
+    .feature-card ul { margin: 0; }
+    .feature-card ul li {
+      padding: 5px 0; font-size: 0.88rem; border-bottom: 1px solid var(--border);
+    }
+    .feature-card ul li:last-child { border-bottom: none; }
+    .feature-card ul li::before { content: '·'; color: var(--accent-2); margin-right: 6px; font-size: 1rem; }
+
+    /* Image gallery */
+    .gallery { display: flex; flex-direction: column; gap: 20px; margin: 32px 0; }
+    .gallery-img {
+      width: 100%; border-radius: var(--radius);
+      background: var(--bg-3); overflow: hidden;
+      border: 1px solid var(--border);
+    }
+    .gallery-img img { width: 100%; display: block; }
+    .gallery-img-placeholder {
+      aspect-ratio: 16/9;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--text-dim); font-size: 0.82rem; gap: 8px; flex-direction: column;
+    }
+    .gallery-caption {
+      font-size: 0.8rem; color: var(--text-dim); text-align: center; margin-top: 8px;
+    }
+
+    /* Metrics */
+    .metrics { display: flex; flex-wrap: wrap; gap: 20px; margin: 32px 0; }
+    .metric-card {
+      flex: 1; min-width: 160px;
+      background: var(--bg-3); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 28px 20px; text-align: center;
+      position: relative; overflow: hidden;
+    }
+    .metric-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+    }
+    .metric-card .number {
+      font-size: 2.2rem; font-weight: 700; color: var(--accent-2);
+      letter-spacing: -0.02em; line-height: 1;
+    }
+    .metric-card .label {
+      font-size: 0.82rem; color: var(--text-muted); margin-top: 8px; line-height: 1.4;
+    }
+
+    /* Project nav */
+    .project-nav {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 48px 0; border-top: 1px solid var(--border); margin-top: 80px;
+    }
+    .project-nav a {
+      display: flex; align-items: center; gap: 8px;
+      color: var(--text-muted); text-decoration: none; font-size: 0.88rem;
+      transition: color 0.2s;
+    }
+    .project-nav a:hover { color: var(--accent-2); }
+
+    @media (max-width: 768px) {
+      .project-info-row { gap: 20px; }
+      .metrics { flex-direction: column; }
+      .feature-grid { grid-template-columns: 1fr; }
+      .project-section ul li {
+        display: block; position: relative; padding-left: 20px;
+      }
+      .project-section ul li::before {
+        position: absolute; left: 0; top: 11px;
+      }
+      .project-section ul li strong {
+        display: block; white-space: nowrap; margin-bottom: 4px;
+      }
+    }
+  </style>
+  <link rel="icon" type="image/svg+xml" href="../images/favicon.svg">
+</head>
+<body>
+
+<!-- Nav -->
+<nav class="nav" role="navigation" aria-label="主導覽">
+  <div class="container nav__inner">
+    <a class="nav__logo" href="../index.html">Suzy ✦</a>
+    <ul class="nav__links">
+      <li><a href="../about.html">關於我</a></li>
+      <li><a href="../work.html" class="active">精選作品</a></li>
+      <li><a href="../contact.html">聯絡我</a></li>
+    </ul>
+    <button class="nav__hamburger" aria-label="開啟選單" aria-expanded="false">
+      <i data-lucide="menu" style="width:24px;height:24px;"></i>
+    </button>
+  </div>
+  <nav class="nav__drawer" aria-label="行動裝置選單">
+    <a href="../about.html">關於我</a>
+    <a href="../work.html">精選作品</a>
+    <a href="../contact.html">聯絡我</a>
+  </nav>
+</nav>
+
+<!-- Project Hero -->
+<section class="project-hero">
+  <div class="container">
+    <a href="../work.html" class="back-link">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+      所有專案
+    </a>
+
+    <div class="project-meta">
+      <span class="tag tag--accent">PM + UI/UX</span>
+      <!-- 更多標籤，例：<span class="tag tag--outline">重建型專案</span> -->
+    </div>
+
+    <h1 class="project-title">【專案名稱】</h1>
+    <p class="project-summary">
+      一到兩句話說明這個專案的核心：它解決了什麼問題？對誰？達到了什麼效果？
+    </p>
+
+    <div class="project-info-row">
+      <div class="project-info-item">
+        <label>我的角色</label>
+        <span>PM + UI/UX Designer</span>
+      </div>
+      <div class="project-info-item">
+        <label>專案時程</label>
+        <span>【時間】</span>
+      </div>
+      <div class="project-info-item">
+        <label>工具</label>
+        <span>Figma · Notion · GitHub</span>
+      </div>
+      <div class="project-info-item">
+        <label>平台</label>
+        <span>Web（RWD）</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Cover Image -->
+<div class="container">
+  <div class="project-cover">
+    <!-- 有封面圖時替換：<img src="./images/cover.jpg" alt="專案封面"> -->
+    <div class="project-cover-placeholder">
+      <div class="cover-icon">📁</div>
+      <span>封面圖即將加入（建議 1600×700px）</span>
+    </div>
+  </div>
+</div>
+
+<!-- Project Content -->
+<div class="container">
+  <div class="project-content">
+
+    <!-- 01 Background -->
+    <div class="project-section">
+      <span class="section-label">01 · Background</span>
+      <h2>專案起點</h2>
+      <p>說明這個專案的起點：當時面對的業務情境、使用者痛點或市場機會是什麼？為什麼這個問題值得解決？</p>
+      <p>可以補充數據或具體情況，例如「使用者流失率達 X%」或「客服反映 Y 類問題佔比最高」。</p>
+    </div>
+
+    <hr class="section-divider">
+
+    <!-- 02 Problem -->
+    <div class="project-section">
+      <span class="section-label">02 · Problem</span>
+      <h2>問題與機會</h2>
+      <p>從使用者訪談或數據出發，說明核心痛點。</p>
+      <ul>
+        <li>痛點一</li>
+        <li>痛點二</li>
+      </ul>
+      <!-- 引言可用 callout -->
+      <div class="callout">
+        <p>「<strong>使用者說過的一句關鍵話，直接指出問題核心。</strong>」</p>
+        <p style="margin-top:8px; font-size:0.82rem; color:var(--text-dim); font-style:normal;">— 訪談對象說明</p>
+      </div>
+    </div>
+
+    <hr class="section-divider">
+
+    <!-- 03 Process -->
+    <div class="project-section">
+      <span class="section-label">03 · Process</span>
+      <h2>從需求到解法</h2>
+      <p>描述你如何從問題出發定義解決方案，有哪些關鍵決策或取捨。</p>
+
+      <!-- 如果有 Sprint / 里程碑拆分，可用 ul -->
+      <ul>
+        <li><strong>Sprint 1 — 說明：</strong>描述這個階段的目標與交付物。</li>
+        <li><strong>Sprint 2 — 說明：</strong>描述這個階段的目標與交付物。</li>
+        <li><strong>Sprint 3 — 說明：</strong>描述這個階段的目標與交付物。</li>
+      </ul>
+
+      <!-- 如果有功能拆分，可用 feature-grid -->
+      <div class="feature-grid">
+        <div class="feature-card">
+          <h4>👤 用戶端</h4>
+          <ul>
+            <li>功能一</li>
+            <li>功能二</li>
+          </ul>
+        </div>
+        <div class="feature-card">
+          <h4>🔧 後台端</h4>
+          <ul>
+            <li>功能一</li>
+            <li>功能二</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <hr class="section-divider">
+
+    <!-- 04 User Flow -->
+    <div class="project-section">
+      <span class="section-label">04 · User Flow</span>
+      <h2>流程重構</h2>
+      <p>說明你如何重新設計流程，以及為什麼這樣設計。</p>
+
+      <div class="flow-steps">
+        <div class="flow-step">
+          <div class="flow-step-num">1</div>
+          <div class="flow-step-text"><strong>步驟一</strong>——說明這個步驟解決了什麼</div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-step-num">2</div>
+          <div class="flow-step-text"><strong>步驟二</strong>——說明這個步驟解決了什麼</div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-step-num">3</div>
+          <div class="flow-step-text"><strong>步驟三</strong>——說明這個步驟解決了什麼</div>
+        </div>
+      </div>
+
+      <div class="gallery">
+        <div class="gallery-img">
+          <!-- <img src="./images/user-flow.jpg" alt="User Flow"> -->
+          <div class="gallery-img-placeholder">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+            User Flow 圖（待補）
+          </div>
+        </div>
+      </div>
+      <p class="gallery-caption">User Flow — 說明流程圖的重點</p>
+    </div>
+
+    <hr class="section-divider">
+
+    <!-- 05 Design -->
+    <div class="project-section">
+      <span class="section-label">05 · Design</span>
+      <h2>設計關鍵決策</h2>
+      <ul>
+        <li><strong>決策一：</strong>說明為什麼這樣設計，解決了什麼問題。</li>
+        <li><strong>決策二：</strong>說明為什麼這樣設計，解決了什麼問題。</li>
+        <li><strong>決策三：</strong>說明為什麼這樣設計，解決了什麼問題。</li>
+      </ul>
+
+      <div class="gallery">
+        <div class="gallery-img">
+          <!-- <img src="./images/ui-1.jpg" alt="UI 截圖"> -->
+          <div class="gallery-img-placeholder">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+            UI 截圖一（待補）
+          </div>
+        </div>
+        <p class="gallery-caption">說明這張圖的設計重點</p>
+
+        <div class="gallery-img">
+          <!-- <img src="./images/ui-2.jpg" alt="UI 截圖"> -->
+          <div class="gallery-img-placeholder">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+            UI 截圖二（待補）
+          </div>
+        </div>
+        <p class="gallery-caption">說明這張圖的設計重點</p>
+      </div>
+    </div>
+
+    <hr class="section-divider">
+
+    <!-- 06 Results -->
+    <div class="project-section">
+      <span class="section-label">06 · Results</span>
+      <h2>成果與影響</h2>
+
+      <div class="metrics">
+        <div class="metric-card">
+          <div class="number">+X%</div>
+          <div class="label">指標說明<br>（例：轉換率）</div>
+        </div>
+        <div class="metric-card">
+          <div class="number">−X%</div>
+          <div class="label">指標說明<br>（例：客服問題量）</div>
+        </div>
+        <div class="metric-card">
+          <div class="number">X 週</div>
+          <div class="label">從 0 到上線<br>的時程</div>
+        </div>
+      </div>
+
+      <ul>
+        <li><strong>層面一：</strong>說明這個專案帶來的具體影響。</li>
+        <li><strong>層面二：</strong>說明這個專案帶來的具體影響。</li>
+      </ul>
+    </div>
+
+    <hr class="section-divider">
+
+    <!-- 07 Reflection -->
+    <div class="project-section">
+      <span class="section-label">07 · Reflection</span>
+      <h2>成長與反思</h2>
+      <ul>
+        <li><strong>學到的事一：</strong>說明這個專案讓你在 PM 或設計上有什麼成長。</li>
+        <li><strong>學到的事二：</strong>說明這個專案讓你在 PM 或設計上有什麼成長。</li>
+      </ul>
+      <h3 style="margin: 32px 0 12px; color: var(--text);">如果重來一次</h3>
+      <ul>
+        <li>你會做什麼不同的決定？</li>
+      </ul>
+    </div>
+
+  </div><!-- /project-content -->
+
+  <!-- Previous / Next -->
+  <div class="project-nav">
+    <a href="../work.html">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+      回到所有專案
+    </a>
+    <a href="#">
+      下一個專案
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </a>
+  </div>
+
+</div><!-- /container -->
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="container">
+    <p>© 2026 Suzy · <a href="mailto:st6918@gmail.com">st6918@gmail.com</a></p>
+  </div>
+</footer>
+
+</body>
+</html>

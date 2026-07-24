@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>maokiddo 折價券系統 — Suzy Portfolio</title>
+  <link rel="stylesheet" href="../css/style.css" />
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js" defer></script>
+  <script src="../js/main.js" defer></script>
+  <style>
+    /* ── Project Detail Page ── */
+    body { padding-top: var(--nav-h); }
+
+    .project-hero {
+      padding: 64px 0 80px;
+      border-bottom: 1px solid var(--border);
+    }
+    .back-link {
+      display: inline-flex; align-items: center; gap: 6px;
+      color: var(--text-dim); text-decoration: none; font-size: 0.85rem;
+      margin-bottom: 28px; transition: color 0.2s;
+    }
+    .back-link:hover { color: var(--accent-2); }
+
+    .project-meta {
+      display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 20px;
+    }
+    .project-title { margin-bottom: 16px; }
+    .project-summary {
+      font-size: 1.12rem; margin-bottom: 32px;
+      color: var(--text-muted); line-height: 1.8;
+    }
+    .project-info-row {
+      display: flex; flex-wrap: wrap; gap: 32px; margin-top: 32px;
+      padding-top: 32px; border-top: 1px solid var(--border);
+    }
+    .project-info-item label {
+      display: block; font-size: 0.72rem; color: var(--text-dim);
+      text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 4px;
+    }
+    .project-info-item span { font-size: 0.9rem; color: var(--text); font-weight: 500; }
+
+    /* Cover image */
+    .project-cover {
+      width: 100%;
+      overflow: hidden; border-radius: var(--radius-lg); margin: 48px 0;
+      display: flex; align-items: center; justify-content: center;
+      position: relative;
+    }
+    .project-cover img { width: 100%; height: auto; display: block; }
+    .project-cover-placeholder {
+      display: flex; flex-direction: column; align-items: center; gap: 12px;
+      color: var(--text-dim); font-size: 0.85rem; text-align: center;
+    }
+    .cover-icon {
+      width: 56px; height: 56px; border-radius: 16px;
+      background: rgba(124,92,252,0.2); border: 1px solid rgba(124,92,252,0.3);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.8rem;
+    }
+
+    /* Content sections */
+    .project-content { max-width: 100%; }
+    .project-section { margin-bottom: 72px; }
+
+    .section-label {
+      display: inline-block; font-size: 0.72rem; font-weight: 600;
+      color: var(--accent-2); text-transform: uppercase; letter-spacing: 0.1em;
+      margin-bottom: 10px;
+    }
+    .project-section h2 {
+      font-size: 1.45rem; margin-bottom: 20px; color: var(--text);
+    }
+    .project-section h3 { color: var(--text); }
+    .project-section p { margin-bottom: 16px; line-height: 1.85; }
+    .project-section ul { list-style: none; margin-bottom: 16px; }
+    .project-section ul li {
+      padding: 10px 0; color: var(--text-muted); font-size: 0.97rem;
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: flex-start; gap: 10px; line-height: 1.7;
+    }
+    .project-section ul li:last-child { border-bottom: none; }
+    .project-section ul li::before { content:'→'; color: var(--accent-2); flex-shrink:0; margin-top: 1px; }
+    .project-section ul li strong { color: var(--text); }
+
+    /* Callout block */
+    .callout {
+      background: var(--bg-3); border-left: 3px solid var(--accent);
+      border-radius: 0 var(--radius) var(--radius) 0;
+      padding: 20px 24px; margin: 24px 0;
+    }
+    .callout p { margin-bottom: 0; font-size: 0.97rem; font-style: italic; }
+    .callout strong { color: var(--text); }
+
+    /* Flow steps */
+    .flow-steps { margin: 28px 0; display: flex; flex-direction: column; gap: 12px; }
+    .flow-step {
+      display: flex; align-items: flex-start; gap: 16px;
+      background: var(--bg-3); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 16px 20px;
+    }
+    .flow-step-num {
+      flex-shrink: 0; width: 28px; height: 28px; border-radius: 50%;
+      background: rgba(124,92,252,0.2); border: 1px solid rgba(124,92,252,0.4);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.78rem; font-weight: 700; color: var(--accent-2);
+    }
+    .flow-step-text { color: var(--text-muted); font-size: 0.95rem; line-height: 1.6; }
+    .flow-step-text strong { color: var(--text); }
+    .flow-group-label {
+      font-size: 0.8rem; font-weight: 700; color: var(--text);
+      margin: 20px 0 10px;
+    }
+
+    /* Feature grid */
+    .feature-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px; margin: 28px 0;
+    }
+    .feature-card {
+      background: var(--bg-3); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 20px;
+    }
+    .feature-card h4 {
+      font-size: 0.88rem; color: var(--accent-2); margin-bottom: 10px;
+      display: flex; align-items: center; gap: 6px;
+    }
+    .feature-card ul { margin: 0; }
+    .feature-card ul li {
+      padding: 5px 0; font-size: 0.88rem; border-bottom: 1px solid var(--border);
+    }
+    .feature-card ul li:last-child { border-bottom: none; }
+    .feature-card ul li::before { content: '·'; color: var(--accent-2); margin-right: 6px; font-size: 1rem; }
+
+    /* Image gallery */
+    .gallery { display: flex; flex-direction: column; gap: 20px; margin: 32px 0; }
+    .gallery-img {
+      width: 100%; border-radius: var(--radius);
+      background: var(--bg-3); overflow: hidden;
+      border: 1px solid var(--border);
+    }
+    .gallery-img img { width: 100%; display: block; }
+    .gallery-img-placeholder {
+      aspect-ratio: 16/9;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--text-dim); font-size: 0.82rem; gap: 8px; flex-direction: column;
+      text-align: center; padding: 16px;
+    }
+    .gallery-caption {
+      font-size: 0.8rem; color: var(--text-dim); text-align: center; margin-top: 8px;
+    }
+
+    /* Result metrics */
+    .metrics { display: flex; flex-wrap: wrap; gap: 20px; margin: 32px 0; }
+    .metric-card {
+      flex: 1; min-width: 160px;
+      background: var(--bg-3); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 28px 20px; text-align: center;
+      position: relative; overflow: hidden;
+    }
+    .metric-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+    }
+    .metric-card .number {
+      font-size: 2.2rem; font-weight: 700; color: var(--accent-2);
+      letter-spacing: -0.02em; line-height: 1;
+    }
+    .metric-card .label {
+      font-size: 0.82rem; color: var(--text-muted); margin-top: 8px;
+      line-height: 1.4;
+    }
+
+    /* Divider */
+    .section-divider {
+      border: none; border-top: 1px solid var(--border); margin: 0 0 72px;
+    }
+
+    .role-label { white-space: nowrap; }
+    @media (max-width: 768px) {
+      .role-label { white-space: normal; }
+    }
+
+    /* Tag */
+    .tag {
+      display: inline-flex; align-items: center;
+      font-size: 0.75rem; font-weight: 600; padding: 4px 12px;
+      border-radius: 999px; border: 1px solid var(--border);
+      color: var(--text-muted);
+    }
+    .tag--accent {
+      background: rgba(124,92,252,0.15); border-color: rgba(124,92,252,0.3);
+      color: var(--accent-2);
+    }
+    .tag--outline { color: var(--text-muted); }
+
+    /* Nav between projects */
+    .project-nav {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 48px 0; border-top: 1px solid var(--border); margin-top: 80px;
+    }
+    .project-nav a {
+      display: flex; align-items: center; gap: 8px;
+      color: var(--text-muted); text-decoration: none; font-size: 0.88rem;
+      transition: color 0.2s;
+    }
+    .project-nav a:hover { color: var(--accent-2); }
+
+    @media (max-width: 768px) {
+      .project-info-row { gap: 20px; }
+      .metrics { flex-direction: column; }
+      .feature-grid { grid-template-columns: 1fr; }
+      .project-section ul li {
+        display: block; position: relative; padding-left: 20px;
+      }
+      .project-section ul li::before {
+        position: absolute; left: 0; top: 11px;
+      }
+      .project-section ul li strong {
+        display: block; white-space: nowrap; margin-bottom: 4px;
+      }
+    }
+  </style>
+  <link rel="icon" type="image/svg+xml" href="../images/favicon.svg">
+</head>
+<body>
+
+<!-- Nav -->
+<nav class="nav" role="navigation" aria-label="主導覽">
+  <div class="container nav__inner">
+    <a class="nav__logo" href="../index.html">Suzy ✦</a>
+    <ul class="nav__links">
+      <li><a href="../about.html">關於我</a></li>
+      <li><a href="../work.html" class="active">精選作品</a></li>
+      <li><a href="../contact.html">聯絡我</a></li>
+    </ul>
+    <button class="nav__hamburger" aria-label="開啟選單" aria-expanded="false">
+      <i data-lucide="menu" style="width:24px;height:24px;"></i>
+    </button>
+  </div>
+  <nav class="nav__drawer" aria-label="行動裝置選單">
+    <a href="../about.html">關於我</a>
+    <a href="../work.html">精選作品</a>
+    <a href="../contact.html">聯絡我</a>
+  </nav>
+</nav>
+
+<!-- Project Hero -->
+<section class="project-hero">
+  <div class="container">
+    <a href="../work.html" class="back-link">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+      所有專案
+    </a>
+
+    <div class="project-meta">
+      <span class="tag tag--accent">PM + UI/UX</span>
+      <span class="tag tag--outline">0→1 全新功能</span>
+      <span class="tag tag--outline">前後台全端設計</span>
+      <span class="tag tag--outline">數據複盤</span>
+    </div>
+
+    <h1 class="project-title">maokiddo 折價券系統</h1>
+    <p class="project-summary">
+      在這個專案之前，maokiddo 的會員誘因機制只有點數系統，完全沒有折價券／折扣碼的能力——作為一個電商平台，行銷活動缺少「打折」這個最基本的槓桿，是相當根本的功能缺口。我以 PM + UI/UX 的角色，從 0 到 1 規劃並設計了這整套系統，涵蓋後台的規則引擎與前台的會員體驗（Web＋Mobile 折價券頁、結帳整合），讓行銷首次有工具能執行 KOL 異業合作、獲客等折扣活動。上線後我持續追蹤兌換與轉換數據，也誠實面對「發放量」與「實際成單」之間的落差，回頭檢視這套從無到有的系統下一步該怎麼調整。
+    </p>
+
+    <div class="project-info-row">
+      <div class="project-info-item">
+        <label>我的角色</label>
+        <span>PRD 規劃、前後台 UI/UX 設計、進度追蹤</span>
+      </div>
+      <div class="project-info-item">
+        <label>專案時程</label>
+        <span>2025.07 MVP 上線（2 個 Sprint／1 個月）</span>
+      </div>
+      <div class="project-info-item">
+        <label>工具</label>
+        <span>Figma · Jira（追蹤進度）</span>
+      </div>
+      <div class="project-info-item">
+        <label>平台</label>
+        <span>Web + Mobile RWD、後台管理系統</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Cover Image -->
+<div class="container">
+  <div class="project-cover">
+    <img src="../images/projects/mao折價券-1.jpg" alt="maokiddo 折價券系統封面——我的折價券頁與結帳頁畫面拼貼">
+  </div>
+</div>
+
+<!-- Project Content -->
+<div class="container">
+  <div class="project-content">
+
+    <!-- 01 Background -->
+    <div class="project-section">
+      <span class="section-label">01 · Background</span>
+      <h2>專案起點</h2>
+      <p>
+        我加入這個專案時，maokiddo 的會員誘因機制只有點數系統（消費累積、點數折抵），完全沒有折價券或折扣碼的能力。這對一個電商平台來說是很基礎但實際缺失的功能：行銷想跟寵物 KOL 異業合作發折扣碼、辦 LINE 好友招募活動，平台上沒有任何工具可以執行，只能靠人工調價或額外贈品這類不精準的方式變通。
+      </p>
+      <p>
+        我的任務是從 0 到 1 規劃並設計一整套折價券系統——後台怎麼發、前台怎麼查、怎麼用，全部都要從無到有定義出來。
+      </p>
+    </div>
+
+    <hr class="section-divider">
+
+    <!-- 02 Problem -->
+    <div class="project-section">
+      <span class="section-label">02 · Problem</span>
+      <h2>問題與機會</h2>
+
+      <div class="callout">
+        <p>「<strong>我們想跟寵物 KOL 合作發折扣碼吸引新客，但平台上根本沒有『折價券』這個東西，只有點數。</strong>」</p>
+      </div>
+
+      <p>問題拆成三層：</p>
+      <ul>
+        <li><strong class="role-label">功能面：</strong>作為電商平台，缺少折扣促銷這個最基本的行銷工具，任何需要「打折」驅動的活動完全無法執行，只能靠人工調價變通。</li>
+        <li><strong class="role-label">體驗面：</strong>這套系統要從 0 開始定義，會員端也還沒有「我的折價券」入口，序號輸入是否有效、有沒有過期、能不能在結帳套用，都要一併設計出明確的即時回饋。</li>
+        <li><strong class="role-label">驗證面：</strong>即便系統做出來、券發出去了，也需要一套機制回答「這些券最後有沒有變成訂單」，否則行銷成效還是黑盒子。</li>
+      </ul>
+    </div>
+
+    <hr class="section-divider">
+
+    <!-- 03 Process -->
+    <div class="project-section">
+      <span class="section-label">03 · Process</span>
+      <h2>從需求到解法</h2>
+
+      <h3 style="margin-bottom:16px;">時效壓力：暑期旺季卡關</h3>
+      <p>
+        專案啟動時正好是七月，寵物電商的暑期旺季，行銷端已經在談多組 KOL 異業合作與 LINE 好友招募活動，但因為平台完全沒有折扣工具，這些活動全部卡住動不了。這個時間壓力直接影響了我怎麼拆分開發範疇——不是把整套系統想清楚再一次做完，而是先讓行銷能動起來，再補齊風控與數據能力。
+      </p>
+
+      <h3 style="margin:32px 0 16px;">兩個 Sprint 的範疇拆分</h3>
+      <p>當時一個 Sprint 兩週，整套系統一個月內完成。我把功能拆成「折扣碼」（會員自行輸入）與「系統發送」（後台主動指派給特定會員）兩種型態，依急迫程度分兩個 Sprint 交付：</p>
+
+      <div class="feature-grid">
+        <div class="feature-card">
+          <h4>🏷️ Sprint 1 — 前台折價頁面＋折扣碼功能</h4>
+          <ul>
+            <li>完成會員端的折價頁面</li>
+            <li>「折扣碼」型態的建立與使用（後台新增券、會員自行輸入折扣碼）</li>
+            <li>優先解決行銷最急需的操作方式——KOL、異業合作可直接拿專屬碼推廣，後台上線後行銷就能自己上架活動</li>
+          </ul>
+        </div>
+        <div class="feature-card">
+          <h4>📊 Sprint 2 — 系統發送＋分析報表</h4>
+          <ul>
+            <li>「系統發送」型態（後台主動指派券，不需會員輸入）</li>
+            <li>發放／兌換／使用三層轉換追蹤的分析報表</li>
+            <li>時效性相對沒那麼急，排在第二個 Sprint，讓 Sprint 1 先解決行銷最痛的問題</li>
+          </ul>
+        </div>
+      </div>
+
+      <h3 style="margin:32px 0 16px;">風險意識的設計決策：系統發送多做了「收回」機制</h3>
+      <p>
+        系統發送是後台主動把券發給會員，一旦設定錯了（金額打錯、發錯對象、發錯數量），人工很難即時補救，可能造成實際的財務損失。所以我在系統發送的規則裡額外設計了「收回」功能，讓已發放但尚未使用的券可以被撤回止損。折扣碼則不同——因為需要會員自己主動輸入才會生效，設定有誤時，使用端本身就多了一層自然的確認關卡，風險本來就低很多，所以沒有做對應的收回機制，避免過度工程增加開發成本。
+      </p>
+
+      <div class="gallery">
+        <div class="gallery-img">
+          <img src="../images/projects/mao折價券-收回.png" alt="系統發送券的收回機制畫面">
+        </div>
+      </div>
+      <p class="gallery-caption">收回機制 — 系統發送的券在尚未使用前可撤回止損，折扣碼型態則不做此設計</p>
+
+      <h3 style="margin:32px 0 16px;">後台管理系統（規則引擎 + 監控）</h3>
+      <ul>
+        <li>兩種發放型態（折扣碼／系統發送）延伸出固定金額／百分比折扣兩種計算方式</li>
+        <li>每組券可設定活動期間、使用上限、狀態機（未啟用／已啟用／已暫停／已結束）</li>
+        <li>針對「折扣碼 × 系統發送」與「四種狀態」的組合，逐一設計「再次編輯」畫面，確保每種情境下可調整與不可調整的欄位都清楚區分（例如已啟用的券不能再改折扣金額，但可以調整到期日）</li>
+        <li>加上折價券發送記錄、到期前通知記錄，讓營運同事能主動掌握即將到期、尚未使用的券，而不是被動等會員反應</li>
+      </ul>
+
+      <div class="gallery">
+        <div class="gallery-img">
+          <img src="../images/projects/mao折價券-figma後台列表畫面.jpg" alt="後台折價券列表畫面（Figma 設計稿）">
+        </div>
+        <p class="gallery-caption">後台折價券列表 — 以狀態色標籤區分未啟用／已啟用／已暫停／已結束（Figma 設計稿）</p>
+      </div>
+
+      <h3 style="margin:32px 0 16px;">前台會員體驗（Web + Mobile 一致但不強行複製）</h3>
+      <ul>
+        <li>「我的折價券頁」以分頁呈現（可使用／已使用／已失效），並可用「即將到期」勾選篩選，會員一眼就能分清楚手上券的狀態，也能主動篩出快過期、該優先使用的券</li>
+        <li>序號輸入設計了即時驗證回饋：有效／無效兩種狀態各自有明確的視覺與文字提示，降低會員「不知道有沒有成功」的猶豫</li>
+        <li>針對「還沒有任何券」設計了空狀態，針對資料讀取設計了 loading 狀態，避免會員誤以為頁面壞掉</li>
+        <li>結帳頁銜接：券可直接在結帳頁套用；沒有可用券時不是留白消失，而是給出「無折價券可用」的明確狀態；也設計了「送出結帳後付款失敗（重新付款）」的情境，避免會員以為折價券被重複扣用</li>
+        <li>Mobile 版不是把 Web 版直接縮小：使用說明用 Popup（Web）在手機版改為 Bottom Sheet，符合手勢操作習慣</li>
+      </ul>
+
+      <div class="gallery">
+        <div class="gallery-img">
+          <img src="../images/projects/mao折價券-前台我的折價券頁.jpg" alt="我的折價券頁——可使用／已使用／已失效分頁切換">
+        </div>
+        <p class="gallery-caption">我的折價券頁 — 分頁呈現券的狀態，並可篩選即將到期的券</p>
+        <div class="gallery-img">
+          <img src="../images/projects/mao折價券-前台結帳頁.jpg" alt="結帳頁折價券套用畫面">
+        </div>
+        <p class="gallery-caption">結帳頁 — 折價券套用銜接，無可用券時給出明確狀態而非留白消失</p>
+      </div>
+
+      <div class="callout">
+        <p>
+          這個專案我沒有另外產出正式的流程圖文件——後台規則引擎到前台體驗的邏輯，全部直接融合進 Figma 稿件裡跟 RD 溝通，搭配完整的 Jira 需求文件追蹤進度與範疇，目的是讓開發能直接照著 Figma 看懂全部規則、加快交付速度，不需要額外一份圖表當中介。這套「Figma 溝通 + Jira 全紀錄」的工作方式，也是當時 RD 主管特別肯定我在文件與溝通上細膩度的原因之一。
+        </p>
+      </div>
+    </div>
+
+    <hr class="section-divider">
+
+    <!-- 04 User Flow -->
+    <div class="project-section">
+      <span class="section-label">04 · User Flow</span>
+      <h2>會員與管理端流程</h2>
+
+      <div class="flow-group-label">會員端</div>
+      <div class="flow-steps">
+        <div class="flow-step">
+          <div class="flow-step-num">1</div>
+          <div class="flow-step-text"><strong>取得折扣碼</strong>——從活動頁或 LINE 好友訊息取得</div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-step-num">2</div>
+          <div class="flow-step-text"><strong>查詢或輸入</strong>——進入「我的折價券頁」查詢，或直接在結帳頁輸入序號</div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-step-num">3</div>
+          <div class="flow-step-text"><strong>即時驗證</strong>——系統即時驗證序號有效性，給予明確回饋</div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-step-num">4</div>
+          <div class="flow-step-text"><strong>套用與付款</strong>——結帳頁套用折扣、完成付款；若付款失敗，導回重新付款流程且折價券狀態不受影響</div>
+        </div>
+      </div>
+
+      <div class="flow-group-label">管理端</div>
+      <div class="flow-steps">
+        <div class="flow-step">
+          <div class="flow-step-num">1</div>
+          <div class="flow-step-text"><strong>建立折價券</strong>——營運同事在後台選擇型態（折扣碼／系統發送）與計算方式（固定金額／百分比）</div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-step-num">2</div>
+          <div class="flow-step-text"><strong>調整規則</strong>——依需要「再次編輯」調整期間、暫停或延長</div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-step-num">3</div>
+          <div class="flow-step-text"><strong>自動記錄</strong>——系統自動記錄發送與到期前通知，讓營運主動追蹤</div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-step-num">4</div>
+          <div class="flow-step-text"><strong>數據複盤</strong>——我在分析報表定期檢視發放／兌換／使用三層轉換數據</div>
+        </div>
+      </div>
+
+    </div>
+
+    <hr class="section-divider">
+
+    <!-- 05 Design -->
+    <div class="project-section">
+      <span class="section-label">05 · Design</span>
+      <h2>設計關鍵決策</h2>
+
+      <ul>
+        <li><strong>序號驗證的即時反饋，而非等結帳才知道結果：</strong>有效／無效狀態各自有獨立畫面設計，讓會員在輸入當下就知道券能不能用，而不是走到付款那一步才被打回票。</li>
+        <li><strong>結帳頁「無折價券可用」做成明確狀態，而非讓區塊消失：</strong>消失會讓會員以為系統壞了；明確告知「目前無可用券」，是刻意的信任感設計。</li>
+        <li><strong>Web 用 Popup、Mobile 改 Bottom Sheet：</strong>使用說明彈窗在兩個平台用了不同的互動模式，是考慮到手機單手操作與觸控手勢後的差異化決策，不是單純的 RWD 縮放。</li>
+        <li><strong>後台「再次編輯」依狀態拆成多個獨立畫面：</strong>已啟用、已暫停、已結束的券，可調整的欄位都不同，用不同畫面而非同一表單動態隱藏欄位，降低了營運同事誤改已生效規則的風險。</li>
+        <li><strong>系統發送才做「收回」機制，折扣碼不做：</strong>這是刻意的取捨，不是漏做。系統發送是後台主動推券給會員，設定錯誤時人工難以補救、有實際財務風險，所以需要收回止損；折扣碼要會員主動輸入才生效，本身就有一層使用端確認，風險低很多，不需要為此增加開發成本。</li>
+      </ul>
+    </div>
+
+    <hr class="section-divider">
+
+    <!-- 06 Results -->
+    <div class="project-section">
+      <span class="section-label">06 · Results</span>
+      <h2>上線後帶來了什麼？</h2>
+
+      <div class="metrics">
+        <div class="metric-card">
+          <div class="number">2 個 Sprint</div>
+          <div class="label">1 個月內從 0 到 1<br>建立前後台折價券系統</div>
+        </div>
+        <div class="metric-card">
+          <div class="number">45 組</div>
+          <div class="label">支撐的不同折扣方案<br>（KOL、LINE 好友獲客等）</div>
+        </div>
+        <div class="metric-card">
+          <div class="number">0.12%</div>
+          <div class="label">累計整體兌換率<br>（截至 2026-07-22）</div>
+        </div>
+      </div>
+
+      <ul>
+        <li><strong class="role-label">開發面：</strong>在暑期旺季的時效壓力下，以 2 個 Sprint（1 個月）從零建立前後台一致的折價券系統，Sprint 1 先交付前台折價頁面＋折扣碼功能解決行銷燃眉之急，Sprint 2 補齊系統發送（含收回止損機制）與分析報表；整個過程在不拖累行銷活動時程的前提下如期交付。</li>
+        <li><strong class="role-label">牽引力：</strong>系統穩定支撐了 45 組不同折扣方案，涵蓋 KOL 異業合作、LINE 好友獲客、大額無門檻券等多種行銷情境。</li>
+        <li><strong class="role-label">商業面：</strong>整體兌換率僅 0.12%，數字本身不理想，但主因並非折價券系統本身的設計問題——同一時期平台 1.0 版本的會員註冊流程存在較多 bug，導致用戶留存率偏低；加上行銷造勢的時間來不及銜接系統上線的節奏，難以快速集客，兩者疊加壓縮了折價券能發揮效果的用戶基數。轉換率低不代表這個功能沒價值，而是要先拆解問題到底出在券本身，還是出在券之外的整體體驗。</li>
+        <li><strong class="role-label">數據觀察：</strong>平均折扣金額（$625）高於平均訂單金額（$264），排除留存因素之外，這點在制定折扣門檻與力度時仍是值得檢討的設計基準。</li>
+      </ul>
+
+      <div class="gallery">
+        <div class="gallery-img">
+          <img src="../images/projects/mao折價券-figma後台報表畫面.jpg" alt="折價券分析報表畫面（Figma 設計稿）">
+        </div>
+        <p class="gallery-caption">折價券分析報表 — 發放／兌換／使用三層轉換數據的檢視畫面（Figma 設計稿）</p>
+      </div>
+
+      <p>下一階段追蹤指標建議：從「取得折扣碼」到「我的折價券頁查詢」到「結帳套用」三段的流失率、依受眾分眾後的兌換率對比、券別 ROI（帶動營業額 ÷ 折扣支出），並搭配同期註冊/留存數據交叉比對，才能公平評估折價券本身的成效。</p>
+    </div>
+
+    <hr class="section-divider">
+
+    <!-- 07 Reflection -->
+    <div class="project-section">
+      <span class="section-label">07 · Reflection</span>
+      <h2>成長與反思</h2>
+
+      <p>
+        系統上線後我做的不只是「把前後台功能生出來」，而是回頭用報表數據檢視整個發券策略是否真的有效。這裡最想放進作品集的，是誠實面對一個不算漂亮的數字時的判斷過程：轉換率低，第一反應不是急著替系統辯護、也不是照單全收把責任攬在自己設計上，而是先拆解問題——是平台當時 1.0 版本註冊流程的 bug 拖累了留存、行銷時程沒能跟上系統上線速度，還是折價券本身的規則設計就有問題。這三者要分開看，才不會誤判，也才知道下一步該推的是留存體驗還是券的規則。
+      </p>
+
+      <h3 style="margin: 32px 0 12px;">如果重來一次</h3>
+      <ul>
+        <li>我會在專案初期就標記出「這個功能的成效高度依賴平台整體的註冊與留存體驗」，並在報表上加註這個前提，避免單看轉換率就誤判這個功能本身的成敗。</li>
+        <li>我會追蹤「取得折扣碼→進入我的折價券頁→結帳套用」這條路徑的流失率，現在只看到最終使用率 0.07%，但看不出會員是根本沒看到券、看到了不會用、還是用了但沒結成單。</li>
+        <li>我會在發券前就先定義「合理折扣區間」，避免出現折扣金額大於訂單金額的狀況。</li>
+        <li>我會把「兌換率」「使用率」當成發券審核的必要條件，而不是等券發完才回頭做報表。</li>
+        <li>我會替不同發放情境（KOL 導流 vs. 大量無門檻券）分別建立轉換基準，而不是用同一套指標評斷所有券的成效。</li>
+        <li>前台體驗上，我會考慮在會員登入後的首頁增加更明顯的「有可用折價券」提示入口，而不是只讓會員被動地在我的折價券頁才看得到。</li>
+      </ul>
+    </div>
+
+  </div><!-- /project-content -->
+
+  <!-- Previous / Next -->
+  <div class="project-nav">
+    <a href="../work.html">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+      回到所有專案
+    </a>
+    <a href="maokiddo-ip.html">
+      下一個專案：maokiddo 品牌識別與角色設計<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </a>
+  </div>
+
+</div><!-- /container -->
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="container">
+    <p>© 2026 Suzy · <a href="mailto:st6918@gmail.com">st6918@gmail.com</a></p>
+  </div>
+</footer>
+
+</body>
+</html>

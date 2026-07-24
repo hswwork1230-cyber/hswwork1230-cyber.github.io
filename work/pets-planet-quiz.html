@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>毛孩星球 · 守護星測驗 — Suzy Portfolio</title>
+  <link rel="stylesheet" href="../css/style.css" />
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js" defer></script>
+  <script src="../js/main.js" defer></script>
+  <style>
+    /* ── Project Detail Page ── */
+    body { padding-top: var(--nav-h); }
+
+    .project-hero {
+      padding: 64px 0 80px;
+      border-bottom: 1px solid var(--border);
+    }
+    .back-link {
+      display: inline-flex; align-items: center; gap: 6px;
+      color: var(--text-dim); text-decoration: none; font-size: 0.85rem;
+      margin-bottom: 28px; transition: color 0.2s;
+    }
+    .back-link:hover { color: var(--accent-2); }
+
+    .project-meta {
+      display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 20px;
+    }
+    .project-title { margin-bottom: 16px; }
+    .project-summary {
+      font-size: 1.12rem; margin-bottom: 32px;
+      color: var(--text-muted); line-height: 1.8;
+    }
+    .project-info-row {
+      display: flex; flex-wrap: wrap; gap: 32px; margin-top: 32px;
+      padding-top: 32px; border-top: 1px solid var(--border);
+    }
+    .project-info-item label {
+      display: block; font-size: 0.72rem; color: var(--text-dim);
+      text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 4px;
+    }
+    .project-info-item span { font-size: 0.9rem; color: var(--text); font-weight: 500; }
+
+    /* Cover image */
+    .project-cover {
+      width: 100%; border-radius: var(--radius-lg); margin: 48px 0;
+      overflow: hidden;
+    }
+    .project-cover img { width: 100%; height: auto; display: block; }
+
+    /* Content */
+    .project-content { max-width: 100%; }
+    .project-section { margin-bottom: 72px; }
+    .project-section h2 { font-size: 1.45rem; margin-bottom: 20px; color: var(--text); }
+    .project-section p  { margin-bottom: 16px; line-height: 1.85; }
+    .project-section ul { list-style: none; margin-bottom: 16px; }
+    .project-section ul li {
+      padding: 10px 0; color: var(--text-muted); font-size: 0.97rem;
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: flex-start; gap: 10px; line-height: 1.7;
+    }
+    .project-section ul li:last-child { border-bottom: none; }
+    .project-section ul li::before { content:'→'; color: var(--accent-2); flex-shrink:0; margin-top: 1px; }
+    .project-section ul li strong { white-space: nowrap; color: var(--text); }
+
+    /* Section divider */
+    .section-divider {
+      border: none; border-top: 1px solid var(--border); margin: 0 0 72px;
+    }
+
+    /* Callout */
+    .callout {
+      background: var(--bg-3); border-left: 3px solid var(--accent);
+      border-radius: 0 var(--radius) var(--radius) 0;
+      padding: 20px 24px; margin: 24px 0;
+    }
+    .callout p { margin-bottom: 0; font-size: 0.97rem; font-style: italic; }
+    .callout strong { color: var(--text); }
+
+    /* Flow steps */
+    .flow-steps { margin: 28px 0; display: flex; flex-direction: column; gap: 12px; }
+    .flow-step {
+      display: flex; align-items: flex-start; gap: 16px;
+      background: var(--bg-3); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 16px 20px;
+    }
+    .flow-step-num {
+      flex-shrink: 0; width: 28px; height: 28px; border-radius: 50%;
+      background: rgba(124,92,252,0.2); border: 1px solid rgba(124,92,252,0.4);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.78rem; font-weight: 700; color: var(--accent-2);
+    }
+    .flow-step-text { color: var(--text-muted); font-size: 0.95rem; line-height: 1.6; }
+    .flow-step-text strong { color: var(--text); }
+
+    /* Feature grid */
+    .feature-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px; margin: 28px 0;
+    }
+    .feature-card {
+      background: var(--bg-3); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 20px;
+    }
+    .feature-card h4 {
+      font-size: 0.88rem; color: var(--accent-2); margin-bottom: 10px;
+    }
+    .feature-card ul { margin: 0; }
+    .feature-card ul li {
+      padding: 5px 0; font-size: 0.88rem; border-bottom: 1px solid var(--border);
+    }
+    .feature-card ul li:last-child { border-bottom: none; }
+    .feature-card ul li::before { content: '·'; color: var(--accent-2); margin-right: 6px; font-size: 1rem; }
+
+    /* Image gallery */
+    .gallery { display: flex; flex-direction: column; gap: 20px; margin: 32px 0; }
+    .gallery-img {
+      width: 100%; border-radius: var(--radius);
+      background: var(--bg-3); overflow: hidden;
+      border: 1px solid var(--border);
+    }
+    .gallery-img img { width: 100%; display: block; }
+    .gallery-caption {
+      font-size: 0.8rem; color: var(--text-dim); text-align: center; margin-top: 8px;
+    }
+
+    /* Metrics */
+    .metrics { display: flex; flex-wrap: wrap; gap: 20px; margin: 32px 0; }
+    .metric-card {
+      flex: 1; min-width: 160px;
+      background: var(--bg-3); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 28px 20px; text-align: center;
+      position: relative; overflow: hidden;
+    }
+    .metric-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+    }
+    .metric-card .number {
+      font-size: 2.2rem; font-weight: 700; color: var(--accent-2);
+      letter-spacing: -0.02em; line-height: 1;
+    }
+    .metric-card .label {
+      font-size: 0.82rem; color: var(--text-muted); margin-top: 8px; line-height: 1.4;
+    }
+
+    /* Live link button */
+    .live-link {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      color: #fff; text-decoration: none;
+      padding: 12px 24px; border-radius: var(--radius);
+      font-size: 0.9rem; font-weight: 600; margin-top: 8px;
+      transition: opacity 0.2s;
+    }
+    .live-link:hover { opacity: 0.85; }
+
+    /* Project nav */
+    .project-nav {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 48px 0; border-top: 1px solid var(--border); margin-top: 80px;
+    }
+    .project-nav a {
+      display: flex; align-items: center; gap: 8px;
+      color: var(--text-muted); text-decoration: none; font-size: 0.88rem;
+      transition: color 0.2s;
+    }
+    .project-nav a:hover { color: var(--accent-2); }
+
+    @media (max-width: 768px) {
+      .project-info-row { gap: 20px; }
+      .metrics { flex-direction: column; }
+      .feature-grid { grid-template-columns: 1fr; }
+      .project-section ul li {
+        display: block; position: relative; padding-left: 20px;
+      }
+      .project-section ul li::before {
+        position: absolute; left: 0; top: 11px;
+      }
+      .project-section ul li strong {
+        display: block; white-space: nowrap; margin-bottom: 4px;
+      }
+    }
+  </style>
+  <link rel="icon" type="image/svg+xml" href="../images/favicon.svg">
+</head>
+<body>
+
+<!-- Nav -->
+<nav class="nav" role="navigation" aria-label="主導覽">
+  <div class="container nav__inner">
+    <a class="nav__logo" href="../index.html">Suzy ✦</a>
+    <ul class="nav__links">
+      <li><a href="../about.html">關於我</a></li>
+      <li><a href="../work.html" class="active">精選作品</a></li>
+      <li><a href="../contact.html">聯絡我</a></li>
+    </ul>
+    <button class="nav__hamburger" aria-label="開啟選單" aria-expanded="false">
+      <i data-lucide="menu" style="width:24px;height:24px;"></i>
+    </button>
+  </div>
+  <nav class="nav__drawer" aria-label="行動裝置選單">
+    <a href="../about.html">關於我</a>
+    <a href="../work.html">精選作品</a>
+    <a href="../contact.html">聯絡我</a>
+  </nav>
+</nav>
+
+<!-- Project Hero -->
+<section class="project-hero">
+  <div class="container">
+    <a href="../work.html" class="back-link">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+      所有專案
+    </a>
+
+    <div class="project-meta">
+      <span class="tag tag--accent">互動行銷工具</span>
+      <span class="tag tag--outline">品牌 IP 設計</span>
+      <span class="tag tag--outline">前端開發</span>
+    </div>
+
+    <h1 class="project-title">毛孩星球 · 守護星測驗</h1>
+    <p class="project-summary">
+      從品牌策略出發，將「星象學 × 寵物健康」的品牌定位轉化為可互動的分眾行銷漏斗。
+      獨立完成策略企劃、IP 設計與前端開發，約一周內上線，並成為品牌實體展場的互動推廣素材。
+    </p>
+
+    <div class="project-info-row">
+      <div class="project-info-item">
+        <label>我的角色</label>
+        <span>PM &amp; UI/UX Designer</span>
+      </div>
+      <div class="project-info-item">
+        <label>專案時程</label>
+        <span>2026</span>
+      </div>
+      <div class="project-info-item">
+        <label>工具</label>
+        <span>HTML · CSS · JS · AI 圖像生成</span>
+      </div>
+      <div class="project-info-item">
+        <label>平台</label>
+        <span>Web（RWD）</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Cover Image -->
+<div class="container">
+  <div class="project-cover">
+    <img src="../images/projects/quiz.png" alt="毛孩星球守護星測驗封面">
+  </div>
+</div>
+
+<!-- Project Content -->
+<div class="container">
+  <div class="project-content">
+
+    <!-- 01 Background -->
+    <div class="project-section">
+      <span class="section-label">01 · Background</span>
+      <h2>專案起點</h2>
+      <p>
+        毛孩星球的品牌核心語言是「星象學 × 寵物健康」，但這個概念過去只停留在靜態視覺與文案。
+        我希望讓它變得可以被體驗——讓飼主主動參與，而不是被動接收廣告。
+      </p>
+      <p>
+        這個測驗的商業邏輯是：飼主對自家毛孩的行為觀察（個性、習慣、反應）其實已經對應到不同的健康需求，
+        只是他們不自知。測驗的作用是<strong>把飼主已知的事轉譯成產品推薦的依據</strong>，
+        用娛樂包裝分眾，用星象語言降低購物的防衛心。
+      </p>
+      <div class="callout">
+        <p>核心命題：<strong>如何讓品牌的定位語言從「被看見」變成「被體驗」，同時把趣味互動導向實際的商品轉換？</strong></p>
+      </div>
+    </div>
+
+    <hr class="section-divider">
+
+    <!-- 02 Strategy -->
+    <div class="project-section">
+      <span class="section-label">02 · Strategy</span>
+      <h2>策略設計</h2>
+      <p>
+        測驗不只是娛樂，它是一個輕量的分眾行銷漏斗。整體設計圍繞三個目標展開：
+      </p>
+
+      <div class="flow-steps">
+        <div class="flow-step">
+          <div class="flow-step-num">1</div>
+          <div class="flow-step-text"><strong>讓人做完</strong>——題目只有 4 題，每題從飼主視角出發（「打開家門毛孩怎麼反應」），貼近日常觀察，降低中途放棄的機率。</div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-step-num">2</div>
+          <div class="flow-step-text"><strong>讓人覺得準</strong>——四種星象體質（火象、風象、土象、水象）對應毛孩的真實行為特徵，結果描述夠具體，飼主容易產生共鳴感。</div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-step-num">3</div>
+          <div class="flow-step-text"><strong>讓人點進去</strong>——結果頁直接推薦 1–2 款對應產品，邏輯清楚（火象活潑 → 關節、心血管；水象敏感 → 情緒舒緩、泌尿），推薦不是隨機配對，是有根據的分眾設計。</div>
+        </div>
+      </div>
+    </div>
+
+    <hr class="section-divider">
+
+    <!-- 03 Process -->
+    <div class="project-section">
+      <span class="section-label">03 · Process</span>
+      <h2>從企劃到上線</h2>
+      <p>
+        這個專案由我一人完整負責，從策略發想到前端開發全程獨立執行。
+      </p>
+
+      <div class="feature-grid">
+        <div class="feature-card">
+          <h4>📐 策略與企劃</h4>
+          <ul>
+            <li>星象體質分類框架設計</li>
+            <li>4 題題目與選項撰寫</li>
+            <li>體質 × 產品對應邏輯</li>
+          </ul>
+        </div>
+        <div class="feature-card">
+          <h4>🐾 品牌 IP 設計</h4>
+          <ul>
+            <li>彭彭（貓）&amp; 路卡（狗）人設定義</li>
+            <li>宇航員造型視覺產出</li>
+            <li>AI 工具輔助生成與調整</li>
+          </ul>
+        </div>
+        <div class="feature-card">
+          <h4>🎨 視覺設計</h4>
+          <ul>
+            <li>深色宇宙風格主視覺</li>
+            <li>四種體質各自配色系統</li>
+            <li>結果頁排版與卡片設計</li>
+          </ul>
+        </div>
+        <div class="feature-card">
+          <h4>💻 開發與上線</h4>
+          <ul>
+            <li>HTML / CSS / JS 獨立開發</li>
+            <li>部署至正式網域</li>
+            <li>埋設 GA 追蹤</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <hr class="section-divider">
+
+    <!-- 04 Design -->
+    <div class="project-section">
+      <span class="section-label">04 · Design</span>
+      <h2>視覺設計系統</h2>
+      <p>
+        整體以深色宇宙背景貫穿，強化「星象探測」的沉浸感。每種星象體質有獨立的主色系——
+        火象橘紅、風象金黃、土象綠、水象藍紫——讓結果頁一眼可辨識，也強化品牌記憶點。
+      </p>
+      <p>
+        品牌吉祥物彭彭與路卡以宇航員造型出現，彭彭傲嬌有個性，路卡溫柔帶點膽小，
+        兩者分別對應不同體質的氣質，讓結果頁多了對話感與角色溫度。
+      </p>
+
+      <div class="gallery">
+        <div class="gallery-img">
+          <img src="../images/projects/quiz1.png" alt="測驗題目頁面設計">
+        </div>
+      </div>
+      <p class="gallery-caption">測驗題目頁——4 題、進度條、每題 4 個選項，設計刻意保持輕量</p>
+
+      <div class="gallery">
+        <div class="gallery-img">
+          <img src="../images/projects/quiz2.png" alt="測驗結果頁設計">
+        </div>
+      </div>
+      <p class="gallery-caption">結果頁——星象體質描述、吉祥物台詞、對應產品推薦，各體質配色獨立</p>
+    </div>
+
+    <hr class="section-divider">
+
+    <!-- 05 Outcome -->
+    <div class="project-section">
+      <span class="section-label">05 · Outcome</span>
+      <h2>成果</h2>
+      <p>
+        上線後獲得內部同事正向回饋，行銷團隊將其採用為<strong>實體展場的互動推廣素材</strong>——
+        測驗在展場現場供訪客即時互動使用，彭彭與路卡的形象也在展場實體印製展出。
+      </p>
+      <p>
+        這是這個工具從數位延伸到線下場景的具體證明——一個小型互動網頁，最終讓品牌在實體活動中多了一個有溫度的觸點。
+      </p>
+
+      <div class="metrics">
+        <div class="metric-card">
+          <div class="number">~1 周</div>
+          <div class="label">從策略發想到正式上線</div>
+        </div>
+        <div class="metric-card">
+          <div class="number">4 種</div>
+          <div class="label">星象體質分類，可持續擴充</div>
+        </div>
+        <div class="metric-card">
+          <div class="number">線下</div>
+          <div class="label">實體展場互動採用，IP 形象印製展出</div>
+        </div>
+      </div>
+
+      <a href="http://pets-planet-quiz.petskeeper.com.tw/" target="_blank" rel="noopener noreferrer" class="live-link">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        立即體驗測驗
+      </a>
+    </div>
+
+    <hr class="section-divider">
+
+    <!-- 06 Reflection -->
+    <div class="project-section">
+      <span class="section-label">06 · Reflection</span>
+      <h2>成長與反思</h2>
+      <ul>
+        <li><strong>趣味是入口，邏輯才是骨架：</strong>這個測驗看起來是娛樂，但背後每一題的選項都有對應的體質加權邏輯，產品推薦也不是隨機的。把「設計感」和「策略邏輯」同時做好，是這個專案讓我最有成就感的地方。</li>
+        <li><strong>快速原型的價值：</strong>核心開發完成後立刻拿給同事看並收集回饋，才做最終調整。快速做出可以給人看的版本，比追求完美再發布更有效。</li>
+        <li><strong>數位工具可以長出線下影響力：</strong>一個網頁最後被印出來在展場展示，這件事提醒我——做產品不只是想「這個功能有沒有用」，還要想「這個東西可以被用在哪些地方」。</li>
+      </ul>
+      <h3 style="margin: 32px 0 12px; color: var(--text);">如果重來一次</h3>
+      <ul>
+        <li>會在上線時就規劃 IG 互動廣告的投放方案——這類測驗在社群上的自然傳播效果通常不錯，若有廣告預算加持，完成率與點擊數據會更有說服力。</li>
+        <li>結果頁可以加入「分享給朋友測」的功能，利用飼主之間的互相比較心理，提升自然流量。</li>
+      </ul>
+    </div>
+
+  </div><!-- /project-content -->
+
+  <!-- Previous / Next -->
+  <div class="project-nav">
+    <a href="../work.html">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+      回到所有專案
+    </a>
+    <a href="workenergy.html">
+      下一個專案：WorkEnergy<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </a>
+  </div>
+
+</div><!-- /container -->
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="container">
+    <p>© 2026 Suzy · <a href="mailto:st6918@gmail.com">st6918@gmail.com</a></p>
+  </div>
+</footer>
+
+</body>
+</html>

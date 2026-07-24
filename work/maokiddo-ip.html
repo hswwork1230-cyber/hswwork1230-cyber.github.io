@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>maokiddo 品牌識別與角色設計 — Suzy Portfolio</title>
+  <link rel="stylesheet" href="../css/style.css" />
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js" defer></script>
+  <script src="../js/main.js" defer></script>
+  <style>
+    /* ── Project Detail Page ── */
+    body { padding-top: var(--nav-h); }
+
+    .project-hero {
+      padding: 64px 0 80px;
+      border-bottom: 1px solid var(--border);
+    }
+    .back-link {
+      display: inline-flex; align-items: center; gap: 6px;
+      color: var(--text-dim); text-decoration: none; font-size: 0.85rem;
+      margin-bottom: 28px; transition: color 0.2s;
+    }
+    .back-link:hover { color: var(--accent-2); }
+
+    .project-meta {
+      display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 20px;
+    }
+    .project-title { margin-bottom: 16px; }
+    .project-summary {
+      font-size: 1.12rem; margin-bottom: 32px;
+      color: var(--text-muted); line-height: 1.8;
+    }
+    .project-info-row {
+      display: flex; flex-wrap: wrap; gap: 32px; margin-top: 32px;
+      padding-top: 32px; border-top: 1px solid var(--border);
+    }
+    .project-info-item label {
+      display: block; font-size: 0.72rem; color: var(--text-dim);
+      text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 4px;
+    }
+    .project-info-item span { font-size: 0.9rem; color: var(--text); font-weight: 500; }
+
+    /* Cover image */
+    .project-cover {
+      width: 100%;
+      overflow: hidden; border-radius: var(--radius-lg); margin: 48px 0;
+      display: flex; align-items: center; justify-content: center;
+      position: relative; background: var(--bg-3);
+    }
+    .project-cover img { width: 100%; height: auto; display: block; }
+    .project-cover-placeholder,
+    .gallery-img-placeholder {
+      display: flex; flex-direction: column; align-items: center; gap: 12px;
+      color: var(--text-dim); font-size: 0.85rem; text-align: center;
+    }
+    .gallery-img-placeholder { aspect-ratio: 16/9; justify-content: center; }
+    .cover-icon {
+      width: 56px; height: 56px; border-radius: 16px;
+      background: rgba(124,92,252,0.2); border: 1px solid rgba(124,92,252,0.3);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.8rem;
+    }
+    /* Content sections */
+    .project-content { max-width: 100%; }
+    .project-section { margin-bottom: 72px; }
+
+    .section-label {
+      display: inline-block; font-size: 0.72rem; font-weight: 600;
+      color: var(--accent-2); text-transform: uppercase; letter-spacing: 0.1em;
+      margin-bottom: 10px;
+    }
+    .project-section h2 {
+      font-size: 1.45rem; margin-bottom: 20px; color: var(--text);
+    }
+    .project-section h3 { font-size: 1.1rem; margin: 28px 0 14px; color: var(--text); }
+    .project-section p { margin-bottom: 16px; line-height: 1.85; }
+    .project-section ul { list-style: none; margin-bottom: 16px; }
+    .project-section ul li {
+      padding: 10px 0; color: var(--text-muted); font-size: 0.97rem;
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: flex-start; gap: 10px; line-height: 1.7;
+    }
+    .project-section ul li:last-child { border-bottom: none; }
+    .project-section ul li::before { content:'→'; color: var(--accent-2); flex-shrink:0; margin-top: 1px; }
+    .project-section ul li strong { white-space: nowrap; color: var(--text); }
+
+    .section-divider {
+      border: none; border-top: 1px solid var(--border); margin: 0 0 72px;
+    }
+
+    /* Callout */
+    .callout {
+      background: var(--bg-3); border-left: 3px solid var(--accent);
+      border-radius: 0 var(--radius) var(--radius) 0;
+      padding: 20px 24px; margin: 24px 0;
+    }
+    .callout p { margin-bottom: 0; font-size: 0.97rem; font-style: italic; }
+    .callout strong { color: var(--text); }
+
+    /* Character compare grid */
+    .char-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px; margin: 28px 0;
+    }
+    .char-card {
+      background: var(--bg-3); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 24px;
+    }
+    .char-card h4 {
+      font-size: 1rem; color: var(--accent-2); margin-bottom: 4px;
+    }
+    .char-card .char-sub { font-size: 0.8rem; color: var(--text-dim); margin-bottom: 14px; }
+    .char-card p { font-size: 0.9rem; line-height: 1.75; margin-bottom: 10px; color: var(--text-muted); }
+    .char-card .char-marks { margin-top: 14px; }
+    .char-card .char-marks li {
+      padding: 7px 0; font-size: 0.85rem; border-bottom: 1px dashed var(--border);
+    }
+    .char-card .char-marks li:last-child { border-bottom: none; }
+
+    /* Character crossed layout (image / text alternating) */
+    .char-row {
+      display: flex; gap: 32px; align-items: flex-start;
+      margin: 32px 0 40px;
+    }
+    .char-row.reverse { flex-direction: row-reverse; }
+    .char-row .char-media { flex: 0 0 38%; }
+    .char-row .char-media img {
+      width: 100%; display: block; border-radius: var(--radius);
+      border: 1px solid var(--border);
+    }
+    .char-row .char-text { flex: 1; min-width: 0; }
+
+    /* Flow steps */
+    .flow-steps { margin: 28px 0; display: flex; flex-direction: column; gap: 12px; }
+    .flow-step {
+      display: flex; align-items: flex-start; gap: 16px;
+      background: var(--bg-3); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 16px 20px;
+    }
+    .flow-step-num {
+      flex-shrink: 0; width: 28px; height: 28px; border-radius: 50%;
+      background: rgba(124,92,252,0.2); border: 1px solid rgba(124,92,252,0.4);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.78rem; font-weight: 700; color: var(--accent-2);
+    }
+    .flow-step-text { color: var(--text-muted); font-size: 0.95rem; line-height: 1.6; }
+    .flow-step-text strong { color: var(--text); }
+
+    /* Image gallery */
+    .gallery { display: flex; flex-direction: column; gap: 20px; margin: 32px 0; }
+    .gallery-img {
+      width: 100%; border-radius: var(--radius);
+      background: var(--bg-3); overflow: hidden;
+      border: 1px solid var(--border);
+    }
+    .gallery-img img { width: 100%; display: block; }
+    .gallery-caption {
+      font-size: 0.8rem; color: var(--text-dim); text-align: center; margin-top: 8px;
+    }
+    .gallery-row {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 20px; margin: 32px 0;
+    }
+    .gallery-row .gallery-img { margin: 0; }
+
+    /* Color chips */
+    .color-compare {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px; margin: 28px 0;
+    }
+    .color-card {
+      background: var(--bg-3); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 20px;
+    }
+    .color-card h4 { font-size: 0.88rem; color: var(--text); margin-bottom: 12px; }
+    .color-swatches { display: flex; gap: 8px; margin-bottom: 12px; }
+    .swatch { width: 32px; height: 32px; border-radius: 8px; border: 1px solid var(--border); }
+    .color-card ul { margin: 0; }
+    .color-card ul li { padding: 5px 0; font-size: 0.85rem; border-bottom: 1px solid var(--border); }
+    .color-card ul li:last-child { border-bottom: none; }
+    .color-card ul li::before { content: '·'; color: var(--accent-2); margin-right: 6px; }
+
+    /* Note box */
+    .note-box {
+      background: rgba(124,92,252,0.06); border: 1px dashed rgba(124,92,252,0.35);
+      border-radius: var(--radius); padding: 18px 22px; margin: 24px 0;
+      font-size: 0.88rem; color: var(--text-muted); line-height: 1.75;
+    }
+    .note-box strong { color: var(--text); }
+
+    /* Project nav */
+    .project-nav {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 48px 0; border-top: 1px solid var(--border); margin-top: 80px;
+    }
+    .project-nav a {
+      display: flex; align-items: center; gap: 8px;
+      color: var(--text-muted); text-decoration: none; font-size: 0.88rem;
+      transition: color 0.2s;
+    }
+    .project-nav a:hover { color: var(--accent-2); }
+
+    @media (max-width: 768px) {
+      .project-info-row { gap: 20px; }
+      .char-grid, .color-compare { grid-template-columns: 1fr; }
+      .char-row, .char-row.reverse { flex-direction: column; }
+      .char-row .char-media { flex: none; width: 100%; }
+      .project-section ul li {
+        display: block; position: relative; padding-left: 20px;
+      }
+      .project-section ul li::before {
+        position: absolute; left: 0; top: 11px;
+      }
+      .project-section ul li strong {
+        display: block; white-space: nowrap; margin-bottom: 4px;
+      }
+    }
+  </style>
+  <link rel="icon" type="image/svg+xml" href="../images/favicon.svg">
+</head>
+<body>
+
+<!-- Nav -->
+<nav class="nav" role="navigation" aria-label="主導覽">
+  <div class="container nav__inner">
+    <a class="nav__logo" href="../index.html">Suzy ✦</a>
+    <ul class="nav__links">
+      <li><a href="../about.html">關於我</a></li>
+      <li><a href="../work.html" class="active">精選作品</a></li>
+      <li><a href="../contact.html">聯絡我</a></li>
+    </ul>
+    <button class="nav__hamburger" aria-label="開啟選單" aria-expanded="false">
+      <i data-lucide="menu" style="width:24px;height:24px;"></i>
+    </button>
+  </div>
+  <nav class="nav__drawer" aria-label="行動裝置選單">
+    <a href="../about.html">關於我</a>
+    <a href="../work.html">精選作品</a>
+    <a href="../contact.html">聯絡我</a>
+  </nav>
+</nav>
+
+<!-- Project Hero -->
+<section class="project-hero">
+  <div class="container">
+    <a href="../work.html" class="back-link">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+      所有專案
+    </a>
+
+    <div class="project-meta">
+      <span class="tag tag--accent">Brand Identity & Character Design</span>
+      <span class="tag tag--outline">0→1 品牌識別</span>
+      <span class="tag tag--outline">AI 生圖 Pipeline</span>
+    </div>
+
+    <h1 class="project-title">maokiddo 品牌識別與角色設計</h1>
+    <p class="project-summary">
+      在 maokiddo 寵物到府服務平台的產品工作之外，我同時一手包辦了整套品牌識別與角色系統——從品牌故事發想、名片與制服等應用設計，到品牌吉祥物「旺奇」與「奇咪」的角色設定與 AI 生圖 pipeline，產出印刷成品用於名片、品牌小卡、制服周邊與線下展場物料。目前這套系統已實際印製並用於服務推廣，尚未同步上線至官方網站。
+    </p>
+
+    <div class="project-info-row">
+      <div class="project-info-item">
+        <label>我的角色</label>
+        <span>Brand & Character Designer</span>
+      </div>
+      <div class="project-info-item">
+        <label>專案時程</label>
+        <span>2026 Q1 – Q2（與 maokiddo 產品專案並行）</span>
+      </div>
+      <div class="project-info-item">
+        <label>工具</label>
+        <span>手繪定稿 · AI 生圖 Prompt · Illustrator</span>
+      </div>
+      <div class="project-info-item">
+        <label>產出</label>
+        <span>名片、制服、雙角色設定書</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Cover Image -->
+<div class="container">
+  <div class="project-cover">
+    <img src="../images/projects/maokiddo%20ip-首圖.jpg" alt="maokiddo 品牌設計，旺奇與奇咪並肩站立">
+  </div>
+</div>
+
+<!-- Project Content -->
+<div class="container">
+  <div class="project-content">
+
+    <!-- 01 Background -->
+    <div class="project-section">
+      <span class="section-label">01 · Background</span>
+      <h2>專案起點</h2>
+      <p>maokiddo 是全台首家合法線上寵物到府服務媒合平台。產品面我負責預約流程與媒合機制的設計，但平台本身的介面很難承載「毛孩在等待主人回來」這種細膩的情感命題——名片、展場文宣、周邊物料都需要一個更有溫度、能被記住的品牌臉孔。</p>
+      <p>於是這個專案的目標很單純：不只是畫一隻可愛的吉祥物，而是把 maokiddo 想傳遞的「陪伴」核心，具象成一套完整可延展的品牌識別與角色系統——從品牌故事、角色設定，到名片、制服等應用規格，全部要能撐起後續實體印刷與行銷應用。</p>
+    </div>
+
+    <hr class="section-divider">
+
+    <!-- 02 Brand Story -->
+    <div class="project-section">
+      <span class="section-label">02 · Brand Story</span>
+      <h2>先寫故事，再畫角色</h2>
+      <p>我先確立了品牌故事，再讓所有視覺設定從故事裡長出來，而不是反過來。奇咪的原型是一隻經歷過多次換家的貓——每次主人出差，牠都得在陌生環境裡等待，額頭上的問號紋路，是牠一直在問的那句話。</p>
+      <div class="callout">
+        <p>「<strong>他學會了觀察。學會了在靠近之前，先遠遠地看清楚這個人值不值得信任……他額頭的問號不是裝飾，是他一生都在問的那句話：這次，你會回來嗎？</strong>」</p>
+        <p style="margin-top:8px; font-size:0.82rem; color:var(--text-dim); font-style:normal;">— 奇咪 Kimi 角色設定書</p>
+      </div>
+      <p>另一角色旺奇則是被保母收留、長大後也成為保母的浪浪，代表 maokiddo 平台上「因為被好好照顧過，所以懂得怎麼照顧別人」的照護員精神。兩個角色一冷一熱，剛好對應品牌想同時傳達的「專業」與「溫暖」。</p>
+    </div>
+
+    <hr class="section-divider">
+
+    <!-- 03 Brand Identity -->
+    <div class="project-section">
+      <span class="section-label">03 · Brand Identity</span>
+      <h2>品牌識別系統：名片與制服</h2>
+      <p>品牌識別不只是一個標誌，而是名片、制服、周邊都要能共用的一整套視覺規則。我把整套識別系統落到自己的名片與照護員制服上，讓品牌在每一個實體接觸點都保持一致。</p>
+
+      <h3>名片設計：正面／背面配置</h3>
+      <div class="gallery">
+        <div class="gallery-img">
+          <img src="../images/projects/maokiddo%20ip-名片.jpg" alt="maokiddo 名片正面與背面設計">
+        </div>
+      </div>
+      <p>正面用品牌橘底搭配「毛」字造型的圖案與一句個人化問候語；背面回歸標準資訊層級——姓名與職稱最顯眼，公司與聯絡方式退到次要位置，在有溫度與專業感之間取得平衡。</p>
+
+      <h3>小巧思：貓派／狗派標籤</h3>
+      <div class="gallery">
+        <div class="gallery-img">
+          <img src="../images/projects/maokiddo%20ip-名片巧思.jpg" alt="名片設計巧思：貓派／狗派標籤">
+        </div>
+      </div>
+      <p>在名片上加入「我是貓派／狗派」的小標示，作為輕鬆的自我介紹。這個設計不僅展現個人特色，也呼應我們是寵物相關的平台，希望透過這個小巧思，讓名片更有溫度，也更容易開啟交流。</p>
+
+      <h3>制服設計：正面／背面設計邏輯</h3>
+      <div class="gallery">
+        <div class="gallery-img">
+          <img src="../images/projects/maokiddo%20ip-衣服校稿.jpg" alt="maokiddo 照護員制服設計，正面與背面">
+        </div>
+      </div>
+      <p>正面用一句自嘲式標語「我❤️工作 是我的貓逼我的」製造記憶點與話題性，方便照護員與飼主自然搭話；背面維持乾淨的品牌識別配置——logo 加一句服務定位標語，方便在服務現場被快速辨識。</p>
+
+      <div class="gallery">
+        <div class="gallery-img">
+          <img src="../images/projects/maokiddo%20ip-tshirt我實穿.jpg" alt="我實際穿上這件制服的照片">
+        </div>
+        <p class="gallery-caption">這張是我自己實際穿上的照片，對我來說比較有紀念意義——雖然未必是作品集重點，但也是這套識別系統真的被印出來、被穿在身上的證明。</p>
+      </div>
+    </div>
+
+    <hr class="section-divider">
+
+    <!-- 04 Character Design -->
+    <div class="project-section">
+      <span class="section-label">04 · Character Design</span>
+      <h2>雙角色設計：旺奇 & 奇咪</h2>
+      <p>角色設計不是「畫好看就好」——每一個視覺細節都對應著背後的故事，這是把產品設計那套「每個決策都要有理由」的思維，延伸到角色設計上。</p>
+
+      <div class="char-row">
+        <div class="char-media">
+          <img src="../images/projects/maokiddo%20ip-wonki.jpg" alt="旺奇 Wonki 角色設定圖，正面與背面">
+        </div>
+        <div class="char-text">
+          <h4>旺奇 Wonki</h4>
+          <div class="char-sub">台灣米克斯犬 · 女生</div>
+          <p><strong>性格：</strong>熱情外放、情緒全寫在臉上，失敗了哭很大聲、成功了也笑很大聲，讓人覺得把毛孩交給她很放心——因為她是真的在乎，不是裝的。</p>
+          <p><strong>故事：</strong>走失流浪狗被保母收留，因被愛過而學會愛，長大後也成為保母。</p>
+          <ul class="char-marks">
+            <li><strong>非對稱耳：</strong>左耳尖立、右耳垂折，走失那夜受驚留下的印記，她完全不在意</li>
+            <li><strong>歪舌頭：</strong>固定微歪向右，隨時處於「準備好了！」的狀態</li>
+            <li><strong>橘色圍兜：</strong>保母身份的象徵，也是品牌色的延伸</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="char-row reverse">
+        <div class="char-media">
+          <img src="../images/projects/maokiddo%20ip-kimi.jpg" alt="奇咪 Kimi 角色設定圖，正面與背面">
+        </div>
+        <div class="char-text">
+          <h4>奇咪 Kimi</h4>
+          <div class="char-sub">家貓（灰白雙色公貓）· 男生</div>
+          <p><strong>性格：</strong>表面冷靜高冷，其實每一個細節都看在眼裡；不輕易信任，但一旦信任就是真的，偶爾會在沒人注意時悄悄幫旺奇擦眼淚。</p>
+          <p><strong>故事：</strong>多次被迫換家，在陌生環境等待的孤單讓他學會觀察人心，額頭問號代表他一直在問的那句話：「這次，你會回來嗎？」</p>
+          <ul class="char-marks">
+            <li><strong>問號毛流紋：</strong>額頭深灰問號自然融入毛色，是他一直在問的那句話</li>
+            <li><strong>異色瞳：</strong>左眼琥珀（看人內心）、右眼薄荷綠（看世界表象）</li>
+            <li><strong>尾巴彎鉤：</strong>與額頭印記呼應，是他的「簽名」</li>
+          </ul>
+        </div>
+      </div>
+
+      <h3>奇咪的原型：我家真實的貓咪</h3>
+      <div class="gallery">
+        <div class="gallery-img">
+          <img src="../images/projects/maokiddo%20ip-kimi真實照.jpg" alt="奇咪的原型：我家真實的貓咪">
+        </div>
+        <p class="gallery-caption">牠也是灰白雙色，個性一樣安靜、觀察力強——角色的毛色分布跟氣質，都是先從牠身上找靈感，再轉譯成品牌角色。</p>
+      </div>
+
+      <p>兩隻角色刻意統一成「厚黑線條、純色塊、無漸層、無紋理」的極簡風格，除了畫面討喜，也是為了讓角色好複製、好延展——不管是印在名片、貼在周邊，還是未來做成動畫表情包，都不會因為畫風複雜而失真。</p>
+    </div>
+
+    <hr class="section-divider">
+
+    <!-- 05 Production Pipeline -->
+    <div class="project-section">
+      <span class="section-label">05 · Production Pipeline</span>
+      <h2>從手繪定稿到 AI 生圖 pipeline</h2>
+      <p>角色不是畫一張就結束，而是要能被穩定地重複產出。我把手繪定稿的每一個設定——毛色、耳型、眼睛比例、有無配件、線條粗細——拆解成結構化的 AI 生圖 prompt，確保之後不管誰用什麼工具產圖，兩隻角色都能維持一致的風格與比例。</p>
+
+      <div class="flow-steps">
+        <div class="flow-step">
+          <div class="flow-step-num">1</div>
+          <div class="flow-step-text"><strong>手繪定稿</strong>——先手繪確立五官比例、印記位置與個性表情，作為所有後續產出的視覺基準</div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-step-num">2</div>
+          <div class="flow-step-text"><strong>拆解為結構化 prompt</strong>——把毛色、耳型、瞳色、配件、線條風格逐項寫成明確指令（含 NO gradient、NO texture 等排除條件），降低生圖結果的隨機落差</div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-step-num">3</div>
+          <div class="flow-step-text"><strong>雙角色配色系統</strong>——旺奇（暖／沙棕）與奇咪（冷／灰白＋異色瞳）各限定 2 色塊，方便未來動畫或周邊延展時保持一致</div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-step-num">4</div>
+          <div class="flow-step-text"><strong>輸出印刷素材</strong>——整理成 Illustrator 檔案，交付名片、品牌小卡與制服周邊印製</div>
+        </div>
+      </div>
+
+      <div class="color-compare">
+        <div class="color-card">
+          <h4>旺奇 Wonki</h4>
+          <div class="color-swatches">
+            <div class="swatch" style="background:#d9a875;"></div>
+            <div class="swatch" style="background:#e8562f;"></div>
+          </div>
+          <ul>
+            <li>沙棕色（sandy beige）單色毛皮</li>
+            <li>橘色圍兜，正面三角／背面蝴蝶結</li>
+            <li>暖色調，2 色動畫友善配色</li>
+          </ul>
+        </div>
+        <div class="color-card">
+          <h4>奇咪 Kimi</h4>
+          <div class="color-swatches">
+            <div class="swatch" style="background:#8a8f98;"></div>
+            <div class="swatch" style="background:#ffffff; border-color:#333;"></div>
+          </div>
+          <ul>
+            <li>灰白雙色，無漸層無紋理</li>
+            <li>琥珀＋薄荷綠異色瞳</li>
+            <li>冷色調，與旺奇形成鮮明對比</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <hr class="section-divider">
+
+    <!-- 06 Application -->
+    <div class="project-section">
+      <span class="section-label">06 · Application</span>
+      <h2>落地：從螢幕走進真實場域</h2>
+      <p>這套角色系統目前已經實際印製，出現在服務推廣小卡與品牌周邊上——不是停留在提案稿裡的概念設計，而是真的被拿去用了。</p>
+
+      <div class="gallery">
+        <div class="gallery-img">
+          <img src="../images/projects/maokiddo%20ip-文宣品.jpg" alt="maokiddo 服務推廣文宣，含角色插畫與照護員實際使用照片">
+        </div>
+        <p class="gallery-caption">服務推廣文宣——左：角色搭配平台核心賣點文案；右：照護員實際使用場景，附服務推廣 QR code</p>
+      </div>
+
+      <div class="note-box">
+        目前這套角色與識別系統只用於線下：名片、小卡、制服周邊都已印製並投入實際服務推廣與展場活動，但還沒有同步整合進官方網站——這是下一步要銜接的部分。
+      </div>
+    </div>
+
+    <hr class="section-divider">
+
+    <!-- 07 Reflection -->
+    <div class="project-section">
+      <span class="section-label">07 · Reflection</span>
+      <h2>成長與反思</h2>
+      <ul>
+        <li><strong>角色設計也是產品設計：</strong>把每個視覺細節都綁回故事與品牌定位，而不是單純追求好看，讓角色在不同應用場景（名片、周邊、未來的官網或互動內容）都能保持一致的說服力。</li>
+        <li><strong>AI 生圖是產能工具，不是取代設計判斷：</strong>結構化 prompt 讓生圖結果可控、可複製，但風格基準與情感細節仍然來自手繪定稿——AI 負責放大產出效率，人負責把關一致性與情感準確度。</li>
+      </ul>
+      <h3>如果重來一次</h3>
+      <ul>
+        <li>會更早把官網整合排進時程，讓線下印出來的角色和線上體驗同步亮相，而不是分成兩個階段。</li>
+      </ul>
+    </div>
+
+  </div><!-- /project-content -->
+
+  <!-- Previous / Next -->
+  <div class="project-nav">
+    <a href="../work.html">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+      回到所有專案
+    </a>
+    <a href="pcone-oversea.html">
+      下一個專案：松果購物 · 國際直購服務<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </a>
+  </div>
+
+</div><!-- /container -->
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="container">
+    <p>© 2026 Suzy · <a href="mailto:st6918@gmail.com">st6918@gmail.com</a></p>
+  </div>
+</footer>
+
+</body>
+</html>

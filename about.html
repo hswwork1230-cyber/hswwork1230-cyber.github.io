@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>關於我 — Suzy Portfolio</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js" defer></script>
+  <script src="https://code.iconify.design/iconify-icon/2.1.0/iconify-icon.min.js" defer></script>
+  <script src="js/main.js" defer></script>
+  <style>
+    body { padding-top: var(--nav-h); }
+
+    .page-hero {
+      padding: 72px 0 80px;
+      border-bottom: 1px solid var(--border);
+    }
+    .page-hero h1 { margin-bottom: 16px; }
+    .page-hero p  { max-width: 600px; font-size: 1.1rem; }
+
+    .about-body {
+      display: grid; grid-template-columns: 2fr 1fr;
+      gap: 72px; padding: 80px 0;
+    }
+
+    /* Story */
+    .about-story h2    { margin-bottom: 20px; }
+    .about-story p     { margin-bottom: 18px; }
+    .about-story h3    { margin: 40px 0 12px; color: var(--accent-2); font-size: 0.85rem; letter-spacing: 0.08em; text-transform: uppercase; }
+
+    /* Sidebar: photo + values */
+    .about-sidebar {}
+    .about-photo {
+      width: 100%; aspect-ratio: 3/4;
+      border-radius: var(--radius-lg); overflow: hidden;
+      border: 1px solid var(--border);
+      margin-bottom: 32px;
+    }
+    .about-photo img { width:100%; height:100%; object-fit:cover; object-position: center top; }
+
+    .value-list { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+    .value-item {
+      display: flex; align-items: flex-start; gap: 12px;
+      padding: 14px; background: var(--bg-2);
+      border: 1px solid var(--border); border-radius: var(--radius);
+    }
+    .value-icon {
+      width: 32px; height: 32px; border-radius: 8px;
+      background: rgba(124,92,252,0.12); color: var(--accent-2);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .value-item p { font-size: 0.83rem; color: var(--text-muted); }
+
+    /* Full timeline */
+    .timeline-section { padding: 80px 0; background: var(--bg-2); }
+    .timeline-full { display: flex; flex-direction: column; max-width: 760px; }
+    .tl-item {
+      display: grid; grid-template-columns: 130px 1fr;
+      gap: 24px; padding: 28px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .tl-item:last-child { border-bottom: none; }
+    .tl-year  { font-size: 0.8rem; color: var(--accent-2); font-weight: 700; padding-top: 4px; line-height: 1.5; }
+    .tl-content h3 { margin-bottom: 4px; font-size: 1rem; }
+    .tl-content h4 { font-size: 0.85rem; color: var(--text-muted); font-weight: 400; margin-bottom: 10px; }
+    .tl-content p  { font-size: 0.85rem; line-height: 1.7; }
+    .tl-tags  { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+
+    @media (max-width: 768px) {
+      .about-body { grid-template-columns: 1fr; gap: 48px; }
+      .about-sidebar { order: -1; }
+      .about-photo { max-width: 260px; margin: 0 auto 32px; }
+      .tl-item { grid-template-columns: 1fr; gap: 8px; }
+      .tl-year { font-size: 0.75rem; }
+    }
+  </style>
+  <link rel="icon" type="image/svg+xml" href="images/favicon.svg">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="container nav__inner">
+    <a class="nav__logo" href="index.html">Suzy ✦</a>
+    <ul class="nav__links">
+      <li><a href="about.html" class="active">關於我</a></li>
+      <li><a href="work.html">精選作品</a></li>
+      <li><a href="contact.html">聯絡我</a></li>
+    </ul>
+    <button class="nav__hamburger" aria-label="開啟選單" aria-expanded="false">
+      <i data-lucide="menu" style="width:24px;height:24px;"></i>
+    </button>
+  </div>
+  <nav class="nav__drawer">
+    <a href="about.html" class="active">關於我</a>
+    <a href="work.html">精選作品</a>
+    <a href="contact.html">聯絡我</a>
+  </nav>
+</nav>
+
+<!-- Page Hero -->
+<div class="page-hero">
+  <div class="container">
+    <span class="section-label">About</span>
+    <h1>關於我</h1>
+    <p>Product Manager ＆ UI/UX Designer — 從設計出發的產品人，讓每個決策都有畫面，每個畫面都有邏輯。</p>
+  </div>
+</div>
+
+<!-- About Body -->
+<div class="container">
+  <div class="about-body">
+
+    <!-- Story -->
+    <div class="about-story">
+      <h3>我的故事</h3>
+      <h2>從設計到產品，<br>每一步都是刻意的。</h2>
+      <p>
+        我叫 Suzy，是一位設計背景出身的產品經理，也是可以自己動手做 UI 的 PM。
+        <!-- ⚠️ 以下內容待你確認後更新 -->
+        職涯從平面設計起步，做過品牌視覺、電商網站、App 介面設計，
+        然後在愛上大數據正式轉職為 PM——不是因為設計不夠好，而是我想參與更上游的決策。
+      </p>
+      <p>
+        現在在元宇宙事業有限公司擔任 PM & UI/UX Designer，在資源有限的新創裡，
+        從使用者訪談、產品規劃、Wireframe、UI 設計一路做到與 RD 對接、上線驗收，
+        完整跑過產品的整個生命週期。
+      </p>
+      <p>
+        我相信好產品是從「真的理解使用者」出發的，而設計師的背景讓我能更快把抽象需求
+        轉換成每個人都看得懂的畫面和流程。
+      </p>
+
+      <h3>我的工作方式</h3>
+      <p>
+        我習慣在資源有限、角色邊界模糊的新創環境工作。
+        不是因為沒有選擇，而是因為喜歡那種「一個人同時是 PM、設計師、使用者研究員」
+        的完整感——每個決策都要承擔，也都能看到成果。
+      </p>
+      <p>
+        我也善用 AI 工具（Claude、Perplexity）輔助需求梳理、PRD 撰寫與商業模式討論，
+        把時間留給真正需要人判斷的地方。
+      </p>
+    </div>
+
+    <!-- Sidebar -->
+    <div class="about-sidebar">
+      <div class="about-photo">
+        <img src="images/about/Suzy.jpg" alt="Suzy" />
+      </div>
+
+      <ul class="value-list">
+        <li class="value-item">
+          <div class="value-icon"><i data-lucide="eye" style="width:16px;height:16px;"></i></div>
+          <p>用設計的眼睛看產品，把抽象需求轉成清晰畫面</p>
+        </li>
+        <li class="value-item">
+          <div class="value-icon"><i data-lucide="zap" style="width:16px;height:16px;"></i></div>
+          <p>新創通才，習慣在模糊中快速做決策</p>
+        </li>
+        <li class="value-item">
+          <div class="value-icon"><i data-lucide="users" style="width:16px;height:16px;"></i></div>
+          <p>真的在乎使用者，而不只是畫面好不好看</p>
+        </li>
+        <li class="value-item">
+          <div class="value-icon"><i data-lucide="bot" style="width:16px;height:16px;"></i></div>
+          <p>善用 AI 工具，讓判斷力的時間最大化</p>
+        </li>
+      </ul>
+
+      <div style="margin-top:28px;display:flex;flex-direction:column;gap:10px;">
+        <a href="mailto:st6918@gmail.com" style="display:inline-flex;align-items:center;gap:8px;color:var(--text-muted);text-decoration:none;font-size:0.88rem;transition:color 0.2s;" onmouseover="this.style.color='var(--accent-2)'" onmouseout="this.style.color='var(--text-muted)'">
+          <i data-lucide="mail" style="width:15px;height:15px;color:var(--accent-2);"></i>
+          st6918@gmail.com
+        </a>
+        <a href="https://www.linkedin.com/in/suzy-hsiao-portfolio/" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:8px;color:var(--text-muted);text-decoration:none;font-size:0.88rem;transition:color 0.2s;" onmouseover="this.style.color='var(--accent-2)'" onmouseout="this.style.color='var(--text-muted)'">
+          <iconify-icon icon="tabler:brand-linkedin" width="15" height="15" style="display:inline-flex;color:var(--accent-2);"></iconify-icon>
+          LinkedIn
+        </a>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Career Timeline -->
+<section class="timeline-section">
+  <div class="container">
+    <span class="section-label">Career</span>
+    <h2 class="section-title" style="margin-bottom:48px;">職涯時間線</h2>
+
+    <div class="timeline-full">
+
+      <div class="tl-item">
+        <div class="tl-year">2025/11 —<br>現在</div>
+        <div class="tl-content">
+          <h3>Product Manager / Product Designer</h3>
+          <h4>元宇宙事業有限公司｜台北市中山區</h4>
+          <p>在資源有限的新創環境，一人承接完整產品職能。負責產品方向與版本路線規劃，將創辦人與營運的想法整理為可執行的 Roadmap；訪談利害關係人並整理使用情境，輸出流程圖、Wireframe 與開發規格；獨立負責 Web／後台的資訊架構與 UI 設計；直接在 Figma 上與 RD 協作，釐清互動細節並追蹤開發進度。</p>
+          <div class="tl-tags">
+            <span class="tag tag--accent">PM + Design</span>
+            <span class="tag">Figma</span>
+            <span class="tag">Roadmap</span>
+            <span class="tag">敏捷開發</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-year">2025/6 —<br>2025/10</div>
+        <div class="tl-content">
+          <h3>Product Manager</h3>
+          <h4>愛上大數據股份有限公司｜台北市松山區</h4>
+          <p>負責寵物保母平台整體產品策略，規劃媒合機制、信任制度與商業模式；將訪談洞察與數據分析轉化為 PRD，帶領 2 位 RD 協作開發；設計保母評價制度、折價券模組與分級制度；分析轉換率與用戶行為數據，持續優化搜尋排序與留存策略。</p>
+          <div class="tl-tags">
+            <span class="tag tag--accent">PM</span>
+            <span class="tag">PRD</span>
+            <span class="tag">Roadmap</span>
+            <span class="tag">數據分析</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-year">2025/2 —<br>2025/10</div>
+        <div class="tl-content">
+          <h3>UI/UX Designer</h3>
+          <h4>愛上大數據股份有限公司｜台北市松山區</h4>
+          <p>負責飼主端與保母端使用流程規劃、Wireframe 與 Prototype 製作，優化預約、搜尋與溝通體驗；進行多類型使用者訪談，整理痛點並轉化為具體設計方案；建立平台 UI Component 與設計規範，確保前後台視覺與操作一致性，提升開發效率。</p>
+          <div class="tl-tags">
+            <span class="tag tag--accent">UI/UX</span>
+            <span class="tag">Figma</span>
+            <span class="tag">Design System</span>
+            <span class="tag">使用者研究</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-year">2023/10 —<br>2024/6</div>
+        <div class="tl-content">
+          <h3>UI/UX Designer</h3>
+          <h4>松果購物股份有限公司｜台北市南港區</h4>
+          <p>負責電商網站與 App 頁面設計與產品迭代更新；進行競品分析與使用者體驗分析；製作 test case 測試開發頁面；在 Scrum 框架下參與每個 Sprint 的開發流程；透過數據分析版位曝光度與使用者行為。</p>
+          <div class="tl-tags">
+            <span class="tag tag--accent">UI/UX</span>
+            <span class="tag">Figma</span>
+            <span class="tag">Scrum</span>
+            <span class="tag">電商設計</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-year">2023/3 —<br>2023/8</div>
+        <div class="tl-content">
+          <h3>UI/UX Visual Designer</h3>
+          <h4>蜂群電子商務股份有限公司｜台北市內湖區</h4>
+          <p>負責網站與 App 頁面設計，與工程師溝通協作；製作平面文宣品與廣告素材 Banner；使用 ChatGPT、Stable Diffusion 輔助文案撰寫與圖像製作。</p>
+          <div class="tl-tags">
+            <span class="tag tag--accent">UI/UX</span>
+            <span class="tag">視覺設計</span>
+            <span class="tag">AI 工具</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-year">2020/6 —<br>2023/3</div>
+        <div class="tl-content">
+          <h3>Visual Designer</h3>
+          <h4>馥潮生化實業有限公司｜桃園市龜山區</h4>
+          <p>使用 Shopline、Strikingly 等平台上架公司品牌網站；進行網頁切圖並調整 HTML/CSS、處理 RWD；管理旗下電商網站，與外包工程師溝通前端 UIUX；規劃商品包裝設計並進行提案；負責產品影片剪輯與產品拍攝修圖。</p>
+          <div class="tl-tags">
+            <span class="tag tag--accent">視覺設計</span>
+            <span class="tag">HTML/CSS</span>
+            <span class="tag">RWD</span>
+            <span class="tag">電商管理</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-year">2018/9 —<br>2019/9</div>
+        <div class="tl-content">
+          <h3>Graphic Designer</h3>
+          <h4>上海歐雅裝飾材料有限公司｜上海市（海外工作經驗）</h4>
+          <p>書冊編排設計與產品包裝設計；產品修圖、效果圖合成、花紋調色；運用 3D 室內設計軟體製作場景模擬圖；出差蒐集展場商品資訊；管理印刷輸出流程與廠商溝通。</p>
+          <div class="tl-tags">
+            <span class="tag tag--accent">平面設計</span>
+            <span class="tag">包裝設計</span>
+            <span class="tag">海外經驗</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Education -->
+    <div style="margin-top:64px;">
+      <span class="section-label">Education</span>
+      <h2 class="section-title" style="margin-bottom:32px;">學歷</h2>
+      <div class="timeline-full">
+        <div class="tl-item">
+          <div class="tl-year">2016/9 —<br>2020/6</div>
+          <div class="tl-content">
+            <h3>明志科技大學</h3>
+            <h4>視覺傳達設計學系｜大學畢業</h4>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-year">2013/9 —<br>2016/6</div>
+          <div class="tl-content">
+            <h3>私立振聲高中</h3>
+            <h4>多媒體設計科｜高職畢業</h4>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <p>© 2026 Suzy · <a href="mailto:st6918@gmail.com">st6918@gmail.com</a></p>
+  </div>
+</footer>
+
+</body>
+</html>
